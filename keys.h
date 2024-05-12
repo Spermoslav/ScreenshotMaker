@@ -2,154 +2,160 @@
 #define KEYS_H
 
 #include <QString>
-#include <vector>
+#include <map>
+
+using KeyPair = std::pair<int, QString>;
+using keyMap  = std::map<int, QString>;
 
 // Unicode Basic Latin block
-const std::vector<QString> basicKeys =
+const keyMap basicKeys =
 {
-    "Space",
-    "Exclam",
-    "QuoteDbl",
-    "NumberSign",
-    "Dollar",
-    "Percent",
-    "Ampersand",
-    "Apostrophe",
-    "ParenLeft",
-    "ParenRight",
-    "Asterisk",
-    "Plus",
-    "Comma",
-    "Minus",
-    "Period",
-    "Slash",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "Colon",
-    "Semicolon",
-    "Less",
-    "Equal",
-    "Greater",
-    "Question",
-    "At",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "BracketLeft",
-    "Backslash",
-    "BracketRight",
-    "AsciiCircum",
-    "Underscore",
-    "QuoteLeft",
-    "BraceLeft",
-    "Bar",
-    "BraceRight",
-    "AsciiTilde"
+    {Qt::Key_Space,    "Space"},
+    {Qt::Key_Exclam,   "Exclam"},
+    {Qt::Key_QuoteDbl, "QuoteDbl"},
+    {Qt::Key_NumberSign, "NumberSign"},
+    {Qt::Key_Dollar,  "Dollar"},
+    {Qt::Key_Percent, "Percent"},
+    {Qt::Key_Ampersand,  "Ampersand"},
+    {Qt::Key_Apostrophe, "Apostrophe"},
+    {Qt::Key_ParenLeft,  "ParenLeft"},
+    {Qt::Key_ParenRight, "ParenRight"},
+    {Qt::Key_Asterisk, "Asterisk"},
+    {Qt::Key_Plus,   "Plus"},
+    {Qt::Key_Comma,  "Comma"},
+    {Qt::Key_Minus,  "Minus"},
+    {Qt::Key_Period, "Period"},
+    {Qt::Key_Slash,  "Slash"},
+    {Qt::Key_0, "0"},
+    {Qt::Key_1, "1"},
+    {Qt::Key_2, "2"},
+    {Qt::Key_3, "3"},
+    {Qt::Key_4, "4"},
+    {Qt::Key_5, "5"},
+    {Qt::Key_6, "6"},
+    {Qt::Key_7, "7"},
+    {Qt::Key_8, "8"},
+    {Qt::Key_9, "9"},
+    {Qt::Key_Colon,     "Colon"},
+    {Qt::Key_Semicolon, "Semicolon"},
+    {Qt::Key_Less,  "Less"},
+    {Qt::Key_Equal, "Equal"},
+    {Qt::Key_Greater,  "Greater"},
+    {Qt::Key_Question, "Question"},
+    {Qt::Key_At, "At"},
+    {Qt::Key_A, "A"},
+    {Qt::Key_B, "B"},
+    {Qt::Key_C, "C"},
+    {Qt::Key_D, "D"},
+    {Qt::Key_E, "E"},
+    {Qt::Key_F, "F"},
+    {Qt::Key_G, "G"},
+    {Qt::Key_H, "H"},
+    {Qt::Key_I, "I"},
+    {Qt::Key_J, "J"},
+    {Qt::Key_K, "K"},
+    {Qt::Key_L, "L"},
+    {Qt::Key_M, "M"},
+    {Qt::Key_N, "N"},
+    {Qt::Key_O, "O"},
+    {Qt::Key_P, "P"},
+    {Qt::Key_Q, "Q"},
+    {Qt::Key_R, "R"},
+    {Qt::Key_S, "S"},
+    {Qt::Key_T, "T"},
+    {Qt::Key_U, "U"},
+    {Qt::Key_V, "V"},
+    {Qt::Key_W, "W"},
+    {Qt::Key_X, "X"},
+    {Qt::Key_Y, "Y"},
+    {Qt::Key_Z, "Z"},
+    {Qt::Key_BracketLeft,  "BracketLeft"},
+    {Qt::Key_Backslash,    "Backslash"},
+    {Qt::Key_BracketRight, "BracketRight"},
+    {Qt::Key_AsciiCircum, "AsciiCircum"},
+    {Qt::Key_Underscore,  "Underscore"},
+    {Qt::Key_QuoteLeft, "QuoteLeft"},
+    {Qt::Key_BraceLeft, "BraceLeft"},
+    {Qt::Key_Bar, "Bar"},
+    {Qt::Key_BraceRight, "BraceRight"},
+    {Qt::Key_AsciiTilde, "AsciiTilde"}
 };
 
-const std::vector<QString> miscKeys =
+const keyMap miscKeys =
 {
-    "Escape",
-    "Tab",
-    "Backtab",
-    "Backspace",
-    "Enter",
-    "Return",
-    "Insert",
-    "Delete",
-    "Pause",
-    "PrintScr",
-    "SysReq"
+    {Qt::Key_Escape, "Escape"},
+    {Qt::Key_Tab, "Tab"},
+    {Qt::Key_Backtab, "Backtab"},
+    {Qt::Key_Backspace, "Backspace"},
+    {Qt::Key_Return, "Enter"},
+    {Qt::Key_Enter, "Enter"},
+    {Qt::Key_Insert, "Insert"},
+    {Qt::Key_Delete, "Delete"},
+    {Qt::Key_Pause, "Pause"},
+    {Qt::Key_Print, "PrintScr"},
+    {Qt::Key_SysReq, "SysReq"}
 };
 
-const std::vector<QString> cursorMoveKeys =
+const keyMap cursorMoveKeys =
 {
-    "Home",
-    "End",
-    "Left",
-    "Up",
-    "Right",
-    "Down",
-    "PageUp",
-    "PageDown",
+    {Qt::Key_Home, "Home"},
+    {Qt::Key_End, "End"},
+    {Qt::Key_Left, "Left"},
+    {Qt::Key_Up, "Up"},
+    {Qt::Key_Right, "Right"},
+    {Qt::Key_Down, "Down"},
+    {Qt::Key_PageUp, "PageUp"},
+    {Qt::Key_PageDown, "PageDown"}
 };
 
-const std::vector<QString> modKeys =
+const keyMap modKeys =
 {
-    "Shift",
-    "Control",
-    "Meta",
-    "Alt",
-    "CapsLock",
-    "NumLock",
-    "ScrollLock",
+    {Qt::Key_Shift, "Shift"},
+    {Qt::Key_Control, "Ctrl"},
+    {Qt::Key_Meta, "Meta"},
+    {Qt::Key_Alt, "Alt"},
+    {Qt::Key_CapsLock, "CapsLock"},
+    {Qt::Key_NumLock, "NumLock"},
+    {Qt::Key_ScrollLock, "ScrollLock"}
 };
 
 // F1 - F12
-const std::vector<QString> funcKeys =
+const keyMap funcKeys =
 {
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    {Qt::Key_F1, "F1"},
+    {Qt::Key_F2, "F2"},
+    {Qt::Key_F3, "F3"},
+    {Qt::Key_F4, "F4"},
+    {Qt::Key_F5, "F5"},
+    {Qt::Key_F6, "F6"},
+    {Qt::Key_F7, "F7"},
+    {Qt::Key_F8, "F8"},
+    {Qt::Key_F9, "F9"},
+    {Qt::Key_F10, "F10"},
+    {Qt::Key_F11, "F11"},
+    {Qt::Key_F12, "F12"},
 };
 
-static inline QString keyToString(int key)
+inline KeyPair keyToKeyPair(int key)
 {
-    if(key >= 32 && key <= 126)
-        return basicKeys[key - 0x01000010];
+    KeyPair pair;
+    if(key >= 0x20 && key <= 0x7e) {
+        pair = *(basicKeys.find(key));
+    }
     else if(key >= 0x01000000 && key <= 0x0100000a) {
-        return miscKeys[key - 0x01000000];
+        pair = *(miscKeys.find(key));
     }
     else if(key >= 0x01000010 && key <= 0x01000017) {
-        return cursorMoveKeys[key - 0x01000010];
+        pair = *(cursorMoveKeys.find(key));
     }
     else if(key >= 0x01000020 && key <=  0x01000025) {
-        return modKeys[key - 0x01000020];
+        pair = *(modKeys.find(key));
     }
     else if(key >= 0x01000030 && key <=  0x0100003b) {
-        return funcKeys[key - 0x01000030];
+        pair = *(funcKeys.find(key));
     }
-    else return QString::number(key);
+    else return KeyPair(-1, "NULL");
+    return pair;
 }
 
 #endif // KEYS_H
