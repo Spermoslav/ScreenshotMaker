@@ -8,9 +8,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
-#include <vector>
+#include <list>
+#include "keys.h"
 
-
+class ChangeKeys;
 
 class MainWidget : public QWidget
 {
@@ -19,6 +20,10 @@ class MainWidget : public QWidget
 public:
     MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
+
+    void setKey(const std::list<KeyPair> &keys);
+    void updateKeysLabel();
+
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
@@ -28,6 +33,12 @@ private slots:
     void keyChangePBClicked();
 
 private:
+    std::list<KeyPair> keys = {
+                                {Qt::Key_Control, "Ctrl"},
+                                {Qt::Key_Alt, "Alt"},
+                                {Qt::Key_S, "S"}
+                              };
+
     QLabel *dirLabel;
     QLabel *fileExtLabel;
     QLabel *keyLabel;
@@ -42,9 +53,11 @@ private:
     QString dir     = "C:/Users/Лёня/Рабочий стол";
     QString fileExt = ".png";
 
-    QScreen *screen = nullptr;
+    ChangeKeys *changeKeys;
     const static inline QString dirLabelStr = "Путь по умолчанию: ";
     const static inline QString fileExtStr  = "Расширение файла: ";
 };
+
+
 
 #endif // WIDGET_H

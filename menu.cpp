@@ -1,7 +1,9 @@
-#include "menu.h"
-#include "keys.h"
 #include <QApplication>
 #include <QFileDialog>
+#include <QCursor>
+
+#include "menu.h"
+#include "changekeys.h"
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
@@ -13,7 +15,7 @@ MainWidget::MainWidget(QWidget *parent)
     fileExtLabel->setText(fileExtStr);
 
     keyLabel = new QLabel;
-    keyLabel->setText("Сочетание клавиш для скриншота: ");
+    updateKeysLabel();
 
     dirPB = new QPushButton;
     dirPB->setText("Изменить путь по умолчанию");
@@ -35,19 +37,44 @@ MainWidget::MainWidget(QWidget *parent)
     mainLay->addWidget(fileExtCB, 1, 1);
     mainLay->addWidget(keyLabel, 2, 0);
     mainLay->addWidget(keyChangePB, 2, 1);
+
+    changeKeys = new ChangeKeys(this);
+    changeKeys->setFixedSize(300, 100);
 }
 
 MainWidget::~MainWidget()
 {
 }
 
+void MainWidget::setKey(const std::list<KeyPair> &keys)
+{
+    if(!keys.empty()) this->keys = keys;
+
+    else  qDebug() << "setKey(keys) keys - empty";
+    updateKeysLabel();
+}
+
+void MainWidget::updateKeysLabel()
+{
+    if(!keys.empty()) {
+        keyLabel->setText("Сочетание клавиш для скриншота: \n");
+        keyLabel->setText(keyLabel->text() + keys.begin()->second);
+
+        for(int i = 1; i < keys.size(); ++i) {
+            std::list<KeyPair>::iterator it = keys.begin();
+            std::advance(it, i);
+            keyLabel->setText(keyLabel->text() + "+" + it->second);
+        }
+    }
+    else {
+        qDebug() << "in updateKeysLabel()    keys - empty";
+    }
+}
+
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
-//    if(e->key() == Qt::Key_S){
-//        qDebug() << QApplication::primaryScreen()->grabWindow().save(dir + "/testS" + fileExt)
-//                 << dir + "/testS" + fileExt;
-//    }
-    qDebug() << keyToString(e->key());
+    for(int i = 0; i < keys.size(); ++i) {
+    }
 }
 
 void MainWidget::keyReleaseEvent(QKeyEvent *e)
@@ -69,8 +96,5 @@ void MainWidget::dirPBClicked()
 
 void MainWidget::keyChangePBClicked()
 {
-
+    changeKeys->show();
 }
-
-
-
