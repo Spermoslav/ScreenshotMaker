@@ -133,7 +133,7 @@ const std::vector<QString> funcKeys =
     "F12",
 };
 
-QString keyToString(int key)
+static inline QString keyToString(int key)
 {
     if(key >= 32 && key <= 126)
         return basicKeys[key - 0x01000010];
