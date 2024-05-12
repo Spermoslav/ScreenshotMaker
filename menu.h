@@ -9,13 +9,13 @@
 #include <QPushButton>
 #include <QGridLayout>
 
-class Widget : public QWidget
+class MainWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
+    MainWidget(QWidget *parent = nullptr);
+    ~MainWidget();
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
