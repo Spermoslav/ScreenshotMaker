@@ -14,9 +14,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        keys.h
         menu.cpp
         menu.h
+        keys.h
+        changekeys.h
+        changekeys.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
