@@ -8,6 +8,9 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
+#include <vector>
+
+
 
 class MainWidget : public QWidget
 {
@@ -22,12 +25,15 @@ private slots:
 
     void fileExtActivated(int index);
     void dirPBClicked();
+    void keyChangePBClicked();
 
 private:
     QLabel *dirLabel;
     QLabel *fileExtLabel;
+    QLabel *keyLabel;
 
     QPushButton *dirPB;
+    QPushButton *keyChangePB;
 
     QComboBox *fileExtCB;
 
@@ -40,4 +46,5 @@ private:
     const static inline QString dirLabelStr = "Путь по умолчанию: ";
     const static inline QString fileExtStr  = "Расширение файла: ";
 };
+
 #endif // WIDGET_H

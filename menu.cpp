@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "keys.h"
 #include <QApplication>
 #include <QFileDialog>
 
@@ -11,9 +12,16 @@ MainWidget::MainWidget(QWidget *parent)
     fileExtLabel = new QLabel;
     fileExtLabel->setText(fileExtStr);
 
+    keyLabel = new QLabel;
+    keyLabel->setText("Сочетание клавиш для скриншота: ");
+
     dirPB = new QPushButton;
     dirPB->setText("Изменить путь по умолчанию");
     connect(dirPB, &QPushButton::clicked, this, &MainWidget::dirPBClicked);
+
+    keyChangePB = new QPushButton;
+    keyChangePB->setText("Изменить сочетание клавиш");
+    connect(keyChangePB, &QPushButton::clicked, this, &MainWidget::keyChangePBClicked);
 
     fileExtCB = new QComboBox;
     fileExtCB->addItem(fileExt);
@@ -25,6 +33,8 @@ MainWidget::MainWidget(QWidget *parent)
     mainLay->addWidget(dirPB, 0, 1);
     mainLay->addWidget(fileExtLabel, 1, 0);
     mainLay->addWidget(fileExtCB, 1, 1);
+    mainLay->addWidget(keyLabel, 2, 0);
+    mainLay->addWidget(keyChangePB, 2, 1);
 }
 
 MainWidget::~MainWidget()
@@ -33,12 +43,11 @@ MainWidget::~MainWidget()
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
-    qDebug() << "xuty";
-    if(e->key() == Qt::Key_S){
-
-        qDebug() << QApplication::primaryScreen()->grabWindow().save(dir + "/testS" + fileExt)
-                 << dir + "/testS" + fileExt;
-    }
+//    if(e->key() == Qt::Key_S){
+//        qDebug() << QApplication::primaryScreen()->grabWindow().save(dir + "/testS" + fileExt)
+//                 << dir + "/testS" + fileExt;
+//    }
+    qDebug() << keyToString(e->key());
 }
 
 void MainWidget::keyReleaseEvent(QKeyEvent *e)
@@ -57,4 +66,11 @@ void MainWidget::dirPBClicked()
     dir = QFileDialog::getExistingDirectory(this, "Выберите директорию", dir);
     dirLabel->setText(dirLabelStr + "\n" + dir);
 }
+
+void MainWidget::keyChangePBClicked()
+{
+
+}
+
+
 
