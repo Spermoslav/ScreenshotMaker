@@ -17,7 +17,7 @@ MainWidget::MainWidget(QWidget *parent)
 
     fileExtCB = new QComboBox;
     fileExtCB->addItem(fileExt);
-    fileExtCB->addItem("test2");
+    fileExtCB->addItem(".jpeg");
     connect(fileExtCB, &QComboBox::activated, this, &MainWidget::fileExtActivated);
 
     mainLay = new QGridLayout(this);
@@ -33,9 +33,11 @@ MainWidget::~MainWidget()
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
+    qDebug() << "xuty";
     if(e->key() == Qt::Key_S){
-        qDebug() << QApplication::primaryScreen()->grabWindow().save(dir + "/testS.png")
-                 << dir;
+
+        qDebug() << QApplication::primaryScreen()->grabWindow().save(dir + "/testS" + fileExt)
+                 << dir + "/testS" + fileExt;
     }
 }
 
@@ -46,7 +48,8 @@ void MainWidget::keyReleaseEvent(QKeyEvent *e)
 
 void MainWidget::fileExtActivated(int index)
 {
-    qDebug() << index;
+    fileExt = fileExtCB->itemText(index);
+    setFocus();
 }
 
 void MainWidget::dirPBClicked()
