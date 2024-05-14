@@ -8,7 +8,6 @@ ChangeKeys::ChangeKeys(MainWidget *mw)
     parent = mw;
 
     keysLabel = new QLabel;
-    keysLabel->setText("");
     keysLabel->setAlignment(Qt::AlignCenter);
 
     savePB = new QPushButton;
@@ -38,6 +37,10 @@ void ChangeKeys::show()
 void ChangeKeys::keyPressEvent(QKeyEvent *e)
 {
     cancelPB->setText("cancel");
+
+    savePB->setDisabled(true);
+    cancelPB->setDisabled(true);
+
     if(keysChanged) {
         keysLabel->setText("");
         keys.clear();
@@ -54,6 +57,8 @@ void ChangeKeys::keyPressEvent(QKeyEvent *e)
 void ChangeKeys::keyReleaseEvent(QKeyEvent *e)
 {
     keysChanged = true;
+    savePB->setDisabled(false);
+    cancelPB->setDisabled(false);
 }
 
 void ChangeKeys::savePBClicked()
