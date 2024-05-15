@@ -8,8 +8,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <list>
 #include "keys.h"
+#include "screenshotmaker.h"
 
 class ChangeKeys;
 
@@ -24,6 +26,8 @@ public:
     void setKey(const std::list<KeyPair> &keys);
     void updateKeysLabel();
 
+    QObject *obj;
+
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
@@ -33,6 +37,8 @@ private slots:
     void keyChangePBClicked();
 
 private:
+    ScreenShotMaker *SSMaker;
+
     std::list<KeyPair> keys = {
                                 {Qt::Key_Control, "Ctrl"},
                                 {Qt::Key_Alt, "Alt"},
@@ -42,6 +48,8 @@ private:
     QLabel *dirLabel;
     QLabel *fileExtLabel;
     QLabel *keyLabel;
+
+    QGroupBox *box;
 
     QPushButton *dirPB;
     QPushButton *keyChangePB;

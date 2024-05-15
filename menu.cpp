@@ -40,6 +40,8 @@ MainWidget::MainWidget(QWidget *parent)
 
     changeKeys = new ChangeKeys(this);
     changeKeys->setFixedSize(300, 100);
+
+    SSMaker = new ScreenShotMaker;
 }
 
 MainWidget::~MainWidget()
@@ -73,7 +75,8 @@ void MainWidget::updateKeysLabel()
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
-    for(int i = 0; i < keys.size(); ++i) {
+    if(e->key() == Qt::Key_F1) {
+        SSMaker->activate();
     }
 }
 
