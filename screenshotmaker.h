@@ -118,8 +118,8 @@ public:
 private slots:
     void resizeEvent(QResizeEvent *e) override;
 
-    void fastSavePBClicked();
-    void savePBClicked();
+    void fastSavePBClicked(); // быстрое сохранение скрина с настройками конфига
+    void savePBClicked();     // выбор пути, имени и расширения файла
 
 private:
     DarkArea *parent;

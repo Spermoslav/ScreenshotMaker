@@ -28,7 +28,7 @@ void ScreenShotMaker::makeScreenShot(const QString &dir)
         screen->grabScreenShotArea().save(menu->fileDir.dir() + "test" + menu->fileDir.fileExt());
     }
     else {
-        screen->grabScreenShotArea().save(dir + "test" + menu->fileDir.fileExt());
+        screen->grabScreenShotArea().save(dir);
         qDebug() << dir;
     }
 }
@@ -354,10 +354,11 @@ void ToolBar::resizeEvent(QResizeEvent *e)
 void ToolBar::fastSavePBClicked()
 {
     SSMaker->makeScreenShot();
+    SSMaker->close();
 }
 
 void ToolBar::savePBClicked()
 {
-
+    SSMaker->makeScreenShot(QFileDialog::getSaveFileName(this, "Выберите директорию", FileConfig::dir(), "PNG (*.png);; JPEG (*.jpeg);"));
 }
 
