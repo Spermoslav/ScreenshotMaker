@@ -9,7 +9,7 @@
 #include <QPushButton>
 
 class MainWidget;
-class DarkArea;
+class Screen;
 class ScreenShotArea; // зона скриншота
 class ToolBar; // инструменты для взаимодействия с ScreenShotArea
 
@@ -27,16 +27,16 @@ public:
     void reset();
 
 private:
-    DarkArea *screen;
+    Screen *screen;
 
     MainWidget *menu;
 };
 
-class DarkArea : public QLabel
+class Screen : public QLabel
 {
     Q_OBJECT
 public:
-    DarkArea(ScreenShotMaker *parent);
+    Screen(ScreenShotMaker *parent);
 
     void reset();
 
@@ -95,7 +95,7 @@ class ScreenShotArea : public QGroupBox
 {
     Q_OBJECT
 public:
-    ScreenShotArea(DarkArea *sa);
+    ScreenShotArea(Screen *sa);
 
     void makeScreenShot();
 
@@ -104,14 +104,14 @@ private slots:
     void resizeEvent(QResizeEvent *e) override;
 
 private:
-    DarkArea *parent;
+    Screen *parent;
 };
 
 class ToolBar : public QGroupBox
 {
     Q_OBJECT
 public:
-    ToolBar(DarkArea *parent, ScreenShotMaker *ssm);
+    ToolBar(Screen *parent, ScreenShotMaker *ssm);
 
 
     void setVertical(); // расположить вертикально/горизонтально
@@ -126,7 +126,7 @@ private slots:
     void savePBClicked();     // выбор пути, имени и расширения файла
 
 private:
-    DarkArea *parent;
+    Screen *parent;
     ScreenShotMaker *SSMaker;
 
     QPushButton *fastSavePB;

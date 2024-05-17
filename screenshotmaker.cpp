@@ -12,7 +12,7 @@ ScreenShotMaker::ScreenShotMaker(MainWidget *menu)
     setWindowOpacity(1);
     setGeometry(QApplication::primaryScreen()->geometry());
 
-    screen = new DarkArea(this);
+    screen = new Screen(this);
     screen->setGeometry(rect());
 }
 
@@ -44,7 +44,7 @@ void ScreenShotMaker::reset()
     screen->reset();
 }
 
-DarkArea::DarkArea(ScreenShotMaker *parent)
+Screen::Screen(ScreenShotMaker *parent)
     : QLabel(parent)
 {
     SSMaker = parent;
@@ -79,7 +79,7 @@ DarkArea::DarkArea(ScreenShotMaker *parent)
     toolBar->hide();
 }
 
-void DarkArea::reset()
+void Screen::reset()
 {
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);
     gb_2->setGeometry(width() / 2, 0, width() / 2, height() / 2);
@@ -89,7 +89,7 @@ void DarkArea::reset()
     toolBar->hide();
 }
 
-void DarkArea::updateToolsBarPos()
+void Screen::updateToolsBarPos()
 {
     if(changeX) {
         if(changeY) {
@@ -136,17 +136,17 @@ void DarkArea::updateToolsBarPos()
         }
     }
 }
-void DarkArea::moveToolBarLeftUp()
+void Screen::moveToolBarLeftUp()
 {
     toolBar->move(SSArea->x() - tbIndent - toolBar->width(), SSArea->y());
 }
 
-void DarkArea::moveToolBarLeftDown()
+void Screen::moveToolBarLeftDown()
 {
     toolBar->move(SSArea->x() - tbIndent - toolBar->width(), SSArea->y() + SSArea->height() - tbIndent - toolBar->height());
 }
 
-void DarkArea::moveToolBarUpLeft()
+void Screen::moveToolBarUpLeft()
 {
     if(SSArea->y() - toolBar->height() - tbIndent < y()) {
         toolBar->move(SSArea->x() + tbIndent, SSArea->y() + tbIndent);
@@ -156,7 +156,7 @@ void DarkArea::moveToolBarUpLeft()
     }
 }
 
-void DarkArea::moveToolBarUpRight()
+void Screen::moveToolBarUpRight()
 {
     if(SSArea->y() - toolBar->height() - tbIndent < y()) {
         toolBar->move(SSArea->x() + SSArea->width() - toolBar->width() - tbIndent, SSArea->y() + tbIndent);
@@ -166,17 +166,17 @@ void DarkArea::moveToolBarUpRight()
     }
 }
 
-void DarkArea::moveToolBarRightUp()
+void Screen::moveToolBarRightUp()
 {
     toolBar->move(SSArea->x() + SSArea->width() + tbIndent, SSArea->y());
 }
 
-void DarkArea::moveToolBarRightDown()
+void Screen::moveToolBarRightDown()
 {
     toolBar->move(SSArea->x() + SSArea->width() + tbIndent, SSArea->y() + SSArea->height() - toolBar->height());
 }
 
-void DarkArea::moveToolBarDownLeft()
+void Screen::moveToolBarDownLeft()
 {
     if(SSArea->x() + SSArea->width() + toolBar->height() + tbIndent > width()) {
         toolBar->move(SSArea->x() + tbIndent, SSArea->y() + SSArea->height() - tbIndent - toolBar->height());
@@ -186,7 +186,7 @@ void DarkArea::moveToolBarDownLeft()
     }
 }
 
-void DarkArea::moveToolBarDownRight()
+void Screen::moveToolBarDownRight()
 {
     if(SSArea->y() + SSArea->height() + toolBar->height() + tbIndent > height()) {
         toolBar->move(SSArea->x() + SSArea->width() - toolBar->width() - tbIndent, SSArea->y() + SSArea->height() - toolBar->height() - tbIndent);
@@ -196,7 +196,7 @@ void DarkArea::moveToolBarDownRight()
     }
 }
 
-QPixmap DarkArea::grabScreenShotArea()
+QPixmap Screen::grabScreenShotArea()
 {
     SSArea->setStyleSheet("border: 0px;");
     QPixmap pm = grab(QRect(SSArea->x(), SSArea->y(), SSArea->width(), SSArea->height()));
@@ -204,7 +204,7 @@ QPixmap DarkArea::grabScreenShotArea()
     return pm;
 }
 
-void DarkArea::resizeEvent(QResizeEvent *e)
+void Screen::resizeEvent(QResizeEvent *e)
 {
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);
     gb_2->setGeometry(width() / 2, 0, width() / 2, height() / 2);
@@ -212,7 +212,7 @@ void DarkArea::resizeEvent(QResizeEvent *e)
     gb_4->setGeometry(width() / 2, height() / 2, width() / 2, height() / 2);
 }
 
-void DarkArea::mousePressEvent(QMouseEvent *e)
+void Screen::mousePressEvent(QMouseEvent *e)
 {
     toolBar->hide();
     SSArea->show();
@@ -226,21 +226,21 @@ void DarkArea::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void DarkArea::mouseReleaseEvent(QMouseEvent *e)
+void Screen::mouseReleaseEvent(QMouseEvent *e)
 {
     qDebug() << SSArea->rect();
     toolBar->show();
     updateToolsBarPos();
 }
 
-void DarkArea::mouseMoveEvent(QMouseEvent *e)
+void Screen::mouseMoveEvent(QMouseEvent *e)
 {
     if(e->buttons() == Qt::LeftButton) {
         expScreenArea(e);
     }
 }
 
-void DarkArea::expScreenArea(QMouseEvent *e)
+void Screen::expScreenArea(QMouseEvent *e)
 {
     if(e->pos().x() > gb_2->x()) {
         expScreenAreaRight(e);
@@ -278,31 +278,31 @@ void DarkArea::expScreenArea(QMouseEvent *e)
     SSArea->setGeometry(gb_4->x(), gb_3->y(), gb_1->width() - gb_4->x(), gb_2->height() - gb_3->y());
 }
 
-void DarkArea::expScreenAreaLeft(QMouseEvent *e)
+void Screen::expScreenAreaLeft(QMouseEvent *e)
 {
     gb_3->resize(e->pos().x(), height());
     gb_4->move(e->pos().x(), gb_4->y());
 }
 
-void DarkArea::expScreenAreaRight(QMouseEvent *e)
+void Screen::expScreenAreaRight(QMouseEvent *e)
 {
     gb_1->resize(e->pos().x(), gb_1->height());
     gb_2->move(e->pos().x(), 0);
 }
 
-void DarkArea::expScreenAreaUp(QMouseEvent *e)
+void Screen::expScreenAreaUp(QMouseEvent *e)
 {
     gb_1->resize(gb_1->width(), e->pos().y());
     gb_3->move(0, e->pos().y());
 }
 
-void DarkArea::expScreenAreaDown(QMouseEvent *e)
+void Screen::expScreenAreaDown(QMouseEvent *e)
 {
     gb_2->resize(gb_2->width(), e->pos().y());
     gb_4->move(gb_4->x(), e->pos().y());
 }
 
-ScreenShotArea::ScreenShotArea(DarkArea *sa)
+ScreenShotArea::ScreenShotArea(Screen *sa)
     : QGroupBox(sa)
 {
     parent = sa;
@@ -318,7 +318,7 @@ void ScreenShotArea::resizeEvent(QResizeEvent *e)
 
 }
 
-ToolBar::ToolBar(DarkArea *parent, ScreenShotMaker *ssm)
+ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
     : QGroupBox(parent)
 {
     this->parent = parent;
