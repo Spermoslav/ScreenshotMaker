@@ -1,9 +1,13 @@
-#include "screenshotmaker.h"
 #include <QApplication>
+#include <QPixmap>
 
-ScreenShotMaker::ScreenShotMaker()
+#include "menu.h"
+#include "screenshotmaker.h"
+
+ScreenShotMaker::ScreenShotMaker(MainWidget *menu)
     : QWidget()
 {
+    this->menu = menu;
     setWindowOpacity(1);
     setGeometry(QApplication::primaryScreen()->geometry());
 
@@ -17,9 +21,22 @@ void ScreenShotMaker::activate()
     show();
 }
 
-DarkArea::DarkArea(QWidget *parent)
+void ScreenShotMaker::makeScreenShot(const QString &dir)
+{
+    if(dir == "") {
+        screen->grabScreenShotArea().save(menu->getDir() + "test" + menu->getFileExt());
+    }
+    else {
+        screen->grabScreenShotArea().save(dir + "test" + menu->getFileExt());
+        qDebug() << dir;
+    }
+}
+
+DarkArea::DarkArea(ScreenShotMaker *parent)
     : QLabel(parent)
 {
+    SSMaker = parent;
+
     gb_1 = new QGroupBox(this);
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);
     gb_1->setStyleSheet("background-color: rgba(0, 0, 0, " + QString::number(GB_OPACITY) + ");"
@@ -41,11 +58,12 @@ DarkArea::DarkArea(QWidget *parent)
                         "border: 0px;");
 
     SSArea = new ScreenShotArea(this);
-    SSArea->setStyleSheet("border: 2px dashed grey;");
+    SSArea->setStyleSheet(ScreenShotArea::borderStyles);
     SSArea->hide();
 
-    toolBar = new ToolBar(this);
-    toolBar->setStyleSheet("border: 1px solid black;");
+    toolBar = new ToolBar(this, parent);
+    toolBar->setStyleSheet("background-color: rgb(200, 200, 200);"
+                           "border: 1px solid black;");
     toolBar->hide();
 }
 
@@ -162,6 +180,14 @@ void DarkArea::moveToolBarDownRight()
     }
 }
 
+QPixmap DarkArea::grabScreenShotArea()
+{
+    SSArea->setStyleSheet("border: 0px;");
+    QPixmap pm = grab(QRect(SSArea->x(), SSArea->y(), SSArea->width(), SSArea->height()));
+    SSArea->setStyleSheet(ScreenShotArea::borderStyles);
+    return pm;
+}
+
 void DarkArea::resizeEvent(QResizeEvent *e)
 {
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);
@@ -173,7 +199,6 @@ void DarkArea::resizeEvent(QResizeEvent *e)
 void DarkArea::mousePressEvent(QMouseEvent *e)
 {
     toolBar->hide();
-    prevMousePos = e->pos();
     if(e->buttons() == Qt::LeftButton) {
         gb_1->resize(e->pos().x(), e->pos().y());
         gb_2->setGeometry(gb_1->width(), 0, width(), e->pos().y());
@@ -262,9 +287,13 @@ void DarkArea::expScreenAreaDown(QMouseEvent *e)
 
 ScreenShotArea::ScreenShotArea(DarkArea *sa)
     : QGroupBox(sa)
-
 {
     parent = sa;
+}
+
+void ScreenShotArea::makeScreenShot()
+{
+
 }
 
 void ScreenShotArea::resizeEvent(QResizeEvent *e)
@@ -272,14 +301,18 @@ void ScreenShotArea::resizeEvent(QResizeEvent *e)
 
 }
 
-ToolBar::ToolBar(DarkArea *parent)
+ToolBar::ToolBar(DarkArea *parent, ScreenShotMaker *ssm)
     : QGroupBox(parent)
 {
     this->parent = parent;
+    SSMaker = ssm;
     resize(30, 200);
 
-    btn1 = new QPushButton("frst", this);
-    btn2 = new QPushButton("sec", this);
+    fastSavePB = new QPushButton("fast", this);
+    connect(fastSavePB, &QPushButton::clicked, this, &ToolBar::fastSavePBClicked);
+
+    savePB = new QPushButton("save", this);
+    connect(savePB, &QPushButton::clicked, this, &ToolBar::savePBClicked);
 
 }
 
@@ -308,12 +341,22 @@ void ToolBar::rotate()
 void ToolBar::resizeEvent(QResizeEvent *e)
 {
     if(isVertical) {
-        btn1->resize(width(), width());
-        btn2->setGeometry(0, width(), width(), width());
+        fastSavePB->resize(width(), width());
+        savePB->setGeometry(0, width(), width(), width());
     }
     else {
-        btn1->resize(height(), height());
-        btn2->setGeometry(height(), 0, height(), height());
+        fastSavePB->resize(height(), height());
+        savePB->setGeometry(height(), 0, height(), height());
     }
+}
+
+void ToolBar::fastSavePBClicked()
+{
+    SSMaker->makeScreenShot();
+}
+
+void ToolBar::savePBClicked()
+{
+
 }
 

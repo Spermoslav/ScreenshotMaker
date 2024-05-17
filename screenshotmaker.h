@@ -7,9 +7,8 @@
 #include <QMouseEvent>
 #include <QLabel>
 #include <QPushButton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
+class MainWidget;
 class DarkArea;
 class ScreenShotArea; // зона скриншота
 class ToolBar; // инструменты для взаимодействия с ScreenShotArea
@@ -17,24 +16,27 @@ class ToolBar; // инструменты для взаимодействия с 
 class ScreenShotMaker : public QWidget
 {
 public:
-    ScreenShotMaker();
+    ScreenShotMaker(MainWidget *menu);
 
     void activate();
 
+    void makeScreenShot(const QString &dir = "");
+
 private:
     DarkArea *screen;
+
+    MainWidget *menu;
 };
 
 class DarkArea : public QLabel
 {
     Q_OBJECT
 public:
-    DarkArea(QWidget *parent);
+    DarkArea(ScreenShotMaker *parent);
 
     void show();
 
     void updateToolsBarPos();
-
 
     void moveToolBarLeftUp(); // перемещают toolBar слева/вверху/справа/внизу и внутри/снаружи ScreenShotArea
     void moveToolBarLeftDown();
@@ -44,6 +46,8 @@ public:
     void moveToolBarRightDown();
     void moveToolBarDownLeft();
     void moveToolBarDownRight();
+
+    QPixmap grabScreenShotArea();
 
     const QGroupBox *getGb_1() const { return gb_1; }
     const QGroupBox *getGb_2() const { return gb_2; }
@@ -64,6 +68,8 @@ private:
     void expScreenAreaUp(QMouseEvent *e);
     void expScreenAreaDown(QMouseEvent *e);
 
+    ScreenShotMaker *SSMaker;
+
     QGroupBox *gb_1; // создают затемнённую область
     QGroupBox *gb_2;
     QGroupBox *gb_3;
@@ -72,10 +78,7 @@ private:
     ScreenShotArea *SSArea;
     ToolBar *toolBar;
 
-    QPoint prevMousePos;
-
     int tbIndent = 10; // отступ toolBar от ScreenShotArea
-    bool tbInside = false; // будет распологаться toolbar внутри или снаружи ScreenShotArea
 
 // Отвечают, какой параметр будет изменяться у ScreenShotArea при перемещении мыши
     bool changeY; // true - менятся позиция по y, false - меняться height
@@ -90,7 +93,9 @@ class ScreenShotArea : public QGroupBox
 public:
     ScreenShotArea(DarkArea *sa);
 
+    void makeScreenShot();
 
+    const static inline QString borderStyles = "border: 2px dashed grey;";
 private slots:
     void resizeEvent(QResizeEvent *e) override;
 
@@ -102,21 +107,26 @@ class ToolBar : public QGroupBox
 {
     Q_OBJECT
 public:
-    ToolBar(DarkArea *parent);
+    ToolBar(DarkArea *parent, ScreenShotMaker *ssm);
 
 
-    void setVertical(); // вертикальное/горизонтальное расположение
+    void setVertical(); // расположить вертикально/горизонтально
     void setHorizontal();
 
-    void rotate();
+    void rotate(); // повернуть
 
 private slots:
     void resizeEvent(QResizeEvent *e) override;
 
+    void fastSavePBClicked();
+    void savePBClicked();
+
 private:
     DarkArea *parent;
-    QPushButton *btn1;
-    QPushButton *btn2;
+    ScreenShotMaker *SSMaker;
+
+    QPushButton *fastSavePB;
+    QPushButton *savePB;
 
     bool isVertical = true; // true - вертикально расположен, false - горизонтально
 };
