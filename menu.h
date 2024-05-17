@@ -20,8 +20,8 @@ class FileConfig // хранит настройки файла
 {
     friend MainWidget;
 public:
-    const QString &dir() const { return DIR; }
-    const QString &fileExt() const { return EXT; }
+    const static QString &dir() { return DIR; }
+    const static QString &fileExt() { return EXT; }
 private:
     static inline QString DIR = "C:/Users/Лёня/Рабочий стол/"; // директория для файла
     static inline QString EXT = ".png";                        // расширение для файла
