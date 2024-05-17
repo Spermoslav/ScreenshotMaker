@@ -22,6 +22,8 @@ class FileConfig // хранит настройки файла
 public:
     const static QString &dir() { return DIR; }
     const static QString &fileExt() { return EXT; }
+
+    const static inline QString EXT_LIST = "PNG (*.png);; JPEG (*.jpeg);"; // список расширений скриншота для QFileDialog::getSaveFileName
 private:
     static inline QString DIR = "C:/Users/Лёня/Рабочий стол/"; // директория для файла
     static inline QString EXT = ".png";                        // расширение для файла
