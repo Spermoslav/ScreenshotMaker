@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "changekeys.h"
+#include "screenshotmaker.h"
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
@@ -41,7 +42,7 @@ MainWidget::MainWidget(QWidget *parent)
     changeKeys = new ChangeKeys(this);
     changeKeys->setFixedSize(300, 100);
 
-    SSMaker = new ScreenShotMaker;
+    SSMaker = new ScreenShotMaker(this);
 }
 
 MainWidget::~MainWidget()
@@ -94,6 +95,7 @@ void MainWidget::fileExtActivated(int index)
 void MainWidget::dirPBClicked()
 {
     dir = QFileDialog::getExistingDirectory(this, "Выберите директорию", dir);
+    if(dir.at(dir.size() - 1) != '/') dir += "/";
     dirLabel->setText(dirLabelStr + "\n" + dir);
 }
 

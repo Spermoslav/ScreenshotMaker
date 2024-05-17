@@ -11,9 +11,9 @@
 #include <QGroupBox>
 #include <list>
 #include "keys.h"
-#include "screenshotmaker.h"
 
 class ChangeKeys;
+class ScreenShotMaker;
 
 class MainWidget : public QWidget
 {
@@ -26,7 +26,8 @@ public:
     void setKey(const std::list<KeyPair> &keys);
     void updateKeysLabel();
 
-    QObject *obj;
+    const QString &getDir() const { return dir; }
+    const QString &getFileExt() const { return fileExt; }
 
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
@@ -58,7 +59,7 @@ private:
 
     QGridLayout *mainLay;
 
-    QString dir     = "C:/Users/Лёня/Рабочий стол";
+    QString dir     = "C:/Users/Лёня/Рабочий стол/";
     QString fileExt = ".png";
 
     ChangeKeys *changeKeys;
