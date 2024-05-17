@@ -6,9 +6,13 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 class DarkArea;
 class ScreenShotArea; // зона скриншота
+class ToolBar; // инструменты для взаимодействия с ScreenShotArea
 
 class ScreenShotMaker : public QWidget
 {
@@ -28,6 +32,18 @@ public:
     DarkArea(QWidget *parent);
 
     void show();
+
+    void updateToolsBarPos();
+
+
+    void moveToolBarLeftUp(); // перемещают toolBar слева/вверху/справа/внизу и внутри/снаружи ScreenShotArea
+    void moveToolBarLeftDown();
+    void moveToolBarUpLeft();
+    void moveToolBarUpRight();
+    void moveToolBarRightUp();
+    void moveToolBarRightDown();
+    void moveToolBarDownLeft();
+    void moveToolBarDownRight();
 
     const QGroupBox *getGb_1() const { return gb_1; }
     const QGroupBox *getGb_2() const { return gb_2; }
@@ -54,13 +70,18 @@ private:
     QGroupBox *gb_4;
 
     ScreenShotArea *SSArea;
+    ToolBar *toolBar;
 
     QPoint prevMousePos;
-    const quint8 GB_OPACITY = 100; // прозрачность затемнения 0 - 255
 
-// Отвечают, какой параметр будет изменяться у ScreenShowArea при перемещении мыши
+    int tbIndent = 10; // отступ toolBar от ScreenShotArea
+    bool tbInside = false; // будет распологаться toolbar внутри или снаружи ScreenShotArea
+
+// Отвечают, какой параметр будет изменяться у ScreenShotArea при перемещении мыши
     bool changeY; // true - менятся позиция по y, false - меняться height
     bool changeX; // true - менятся позиция по x, false - меняться width
+
+    const quint8 GB_OPACITY = 100; // прозрачность затемнения 0 - 255
 };
 
 class ScreenShotArea : public QGroupBox
@@ -71,10 +92,33 @@ public:
 
 
 private slots:
-
+    void resizeEvent(QResizeEvent *e) override;
 
 private:
     DarkArea *parent;
+};
+
+class ToolBar : public QGroupBox
+{
+    Q_OBJECT
+public:
+    ToolBar(DarkArea *parent);
+
+
+    void setVertical(); // вертикальное/горизонтальное расположение
+    void setHorizontal();
+
+    void rotate();
+
+private slots:
+    void resizeEvent(QResizeEvent *e) override;
+
+private:
+    DarkArea *parent;
+    QPushButton *btn1;
+    QPushButton *btn2;
+
+    bool isVertical = true; // true - вертикально расположен, false - горизонтально
 };
 
 #endif // SCREENSHOTMAKER_H
