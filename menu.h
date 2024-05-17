@@ -12,8 +12,20 @@
 #include <list>
 #include "keys.h"
 
+class MainWidget;
 class ChangeKeys;
 class ScreenShotMaker;
+
+class FileConfig // хранит настройки файла
+{
+    friend MainWidget;
+public:
+    const QString &dir() const { return DIR; }
+    const QString &fileExt() const { return EXT; }
+private:
+    static inline QString DIR = "C:/Users/Лёня/Рабочий стол/"; // директория для файла
+    static inline QString EXT = ".png";                        // расширение для файла
+};
 
 class MainWidget : public QWidget
 {
@@ -26,8 +38,7 @@ public:
     void setKey(const std::list<KeyPair> &keys);
     void updateKeysLabel();
 
-    const QString &getDir() const { return dir; }
-    const QString &getFileExt() const { return fileExt; }
+    FileConfig fileDir;
 
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
@@ -58,9 +69,6 @@ private:
     QComboBox *fileExtCB;
 
     QGridLayout *mainLay;
-
-    QString dir     = "C:/Users/Лёня/Рабочий стол/";
-    QString fileExt = ".png";
 
     ChangeKeys *changeKeys;
     const static inline QString dirLabelStr = "Путь по умолчанию: ";
