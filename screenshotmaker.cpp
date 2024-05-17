@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QFileDialog>
 #include <QPixmap>
 
 #include "menu.h"
@@ -24,10 +25,10 @@ void ScreenShotMaker::activate()
 void ScreenShotMaker::makeScreenShot(const QString &dir)
 {
     if(dir == "") {
-        screen->grabScreenShotArea().save(menu->getDir() + "test" + menu->getFileExt());
+        screen->grabScreenShotArea().save(menu->fileDir.dir() + "test" + menu->fileDir.fileExt());
     }
     else {
-        screen->grabScreenShotArea().save(dir + "test" + menu->getFileExt());
+        screen->grabScreenShotArea().save(dir + "test" + menu->fileDir.fileExt());
         qDebug() << dir;
     }
 }
