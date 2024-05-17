@@ -22,6 +22,10 @@ public:
 
     void makeScreenShot(const QString &dir = "");
 
+    void close();
+
+    void reset();
+
 private:
     DarkArea *screen;
 
@@ -34,7 +38,7 @@ class DarkArea : public QLabel
 public:
     DarkArea(ScreenShotMaker *parent);
 
-    void show();
+    void reset();
 
     void updateToolsBarPos();
 

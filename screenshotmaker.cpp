@@ -33,6 +33,17 @@ void ScreenShotMaker::makeScreenShot(const QString &dir)
     }
 }
 
+void ScreenShotMaker::close()
+{
+    reset();
+    static_cast<QWidget*> (this)->close();
+}
+
+void ScreenShotMaker::reset()
+{
+    screen->reset();
+}
+
 DarkArea::DarkArea(ScreenShotMaker *parent)
     : QLabel(parent)
 {
@@ -68,14 +79,18 @@ DarkArea::DarkArea(ScreenShotMaker *parent)
     toolBar->hide();
 }
 
-void DarkArea::show()
+void DarkArea::reset()
 {
-    static_cast<QLabel*> (this)->show();
+    gb_1->setGeometry(0, 0, width() / 2, height() / 2);
+    gb_2->setGeometry(width() / 2, 0, width() / 2, height() / 2);
+    gb_3->setGeometry(0, height() / 2, width() / 2, height() / 2);
+    gb_4->setGeometry(width() / 2, height() / 2, width() / 2, height() / 2);
+    SSArea->hide();
+    toolBar->hide();
 }
 
 void DarkArea::updateToolsBarPos()
 {
-
     if(changeX) {
         if(changeY) {
             if(SSArea->x() - tbIndent - toolBar->width() >= x()) {
@@ -200,6 +215,7 @@ void DarkArea::resizeEvent(QResizeEvent *e)
 void DarkArea::mousePressEvent(QMouseEvent *e)
 {
     toolBar->hide();
+    SSArea->show();
     if(e->buttons() == Qt::LeftButton) {
         gb_1->resize(e->pos().x(), e->pos().y());
         gb_2->setGeometry(gb_1->width(), 0, width(), e->pos().y());
@@ -359,6 +375,7 @@ void ToolBar::fastSavePBClicked()
 
 void ToolBar::savePBClicked()
 {
-    SSMaker->makeScreenShot(QFileDialog::getSaveFileName(this, "Выберите директорию", FileConfig::dir(), "PNG (*.png);; JPEG (*.jpeg);"));
+    SSMaker->makeScreenShot(QFileDialog::getSaveFileName(this, "Выберите директорию", FileConfig::dir(), FileConfig::EXT_LIST));
+    SSMaker->close();
 }
 
