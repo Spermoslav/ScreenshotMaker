@@ -330,7 +330,9 @@ ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
 {
     this->parent = parent;
     SSMaker = ssm;
-    resize(30, 200);
+
+    setCursor(QCursor(Qt::PointingHandCursor));
+    resize(30, 90);
 
     fastSavePB = new QPushButton("fast", this);
     connect(fastSavePB, &QPushButton::clicked, this, &ToolBar::fastSavePBClicked);
@@ -356,11 +358,11 @@ void ToolBar::rotate()
 {
     if(isVertical) {
         isVertical = false;
-        resize(200, 30);
+        resize(90, 30);
     }
     else {
         isVertical = true;
-        resize(30, 200);
+        resize(30, 90);
     }
 }
 
