@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         changekeys.cpp
         screenshotmaker.h
         screenshotmaker.cpp
+        defines.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
