@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "screenshotmaker.h"
+#include "defines.h"
 
 ScreenShotMaker::ScreenShotMaker(MainWidget *menu)
     : QWidget()
@@ -19,7 +20,11 @@ ScreenShotMaker::ScreenShotMaker(MainWidget *menu)
 void ScreenShotMaker::activate()
 {
     screen->setPixmap(QApplication::primaryScreen()->grabWindow());
+#ifdef SSMAKER_WINDOW
     show();
+#else
+    showFullScreen();
+#endif
 }
 
 void ScreenShotMaker::makeScreenShot(const QString &dir)
