@@ -94,7 +94,9 @@ void MainWidget::fileExtActivated(int index)
 
 void MainWidget::dirPBClicked()
 {
-    fileDir.DIR = QFileDialog::getExistingDirectory(this, "Выберите директорию", fileDir.DIR);
+    QString dir = QFileDialog::getExistingDirectory(this, "Выберите директорию", fileDir.DIR);
+    if(dir.isNull()) return;
+    fileDir.DIR = std::move(dir);
     if(fileDir.DIR.at(fileDir.DIR.size() - 1) != '/') fileDir.DIR += "/";
     dirLabel->setText(dirLabelStr + "\n" + fileDir.DIR);
 }
