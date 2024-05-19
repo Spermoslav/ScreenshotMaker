@@ -77,6 +77,8 @@ Screen::Screen(ScreenShotMaker *parent)
     toolBar->setStyleSheet("background-color: rgb(200, 200, 200);"
                            "border: 1px solid black;");
     toolBar->hide();
+
+    update();
 }
 
 void Screen::reset()
@@ -331,6 +333,8 @@ ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
     savePB = new QPushButton("save", this);
     connect(savePB, &QPushButton::clicked, this, &ToolBar::savePBClicked);
 
+    closePB = new QPushButton("X", this);
+    connect(closePB, &QPushButton::clicked, this, &ToolBar::closePBClicked);
 }
 
 void ToolBar::setVertical()
@@ -359,11 +363,13 @@ void ToolBar::resizeEvent(QResizeEvent *e)
 {
     if(isVertical) {
         fastSavePB->resize(width(), width());
-        savePB->setGeometry(0, width(), width(), width());
+        savePB->setGeometry(0, fastSavePB->y() + width(), width(), width());
+        closePB->setGeometry(0, savePB->y() + width(), width(), width());
     }
     else {
         fastSavePB->resize(height(), height());
-        savePB->setGeometry(height(), 0, height(), height());
+        savePB->setGeometry(fastSavePB->x() + height(), 0, height(), height());
+        closePB->setGeometry(savePB->x() + height(), 0, height(), height());
     }
 }
 
@@ -379,3 +385,7 @@ void ToolBar::savePBClicked()
     SSMaker->close();
 }
 
+void ToolBar::closePBClicked()
+{
+    SSMaker->close();
+}

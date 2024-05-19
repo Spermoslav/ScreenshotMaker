@@ -113,7 +113,6 @@ class ToolBar : public QGroupBox
 public:
     ToolBar(Screen *parent, ScreenShotMaker *ssm);
 
-
     void setVertical(); // расположить вертикально/горизонтально
     void setHorizontal();
 
@@ -124,6 +123,7 @@ private slots:
 
     void fastSavePBClicked(); // быстрое сохранение скрина с настройками конфига
     void savePBClicked();     // выбор пути, имени и расширения файла
+    void closePBClicked();
 
 private:
     Screen *parent;
@@ -131,6 +131,7 @@ private:
 
     QPushButton *fastSavePB;
     QPushButton *savePB;
+    QPushButton *closePB;
 
     bool isVertical = true; // true - вертикально расположен, false - горизонтально
 };
