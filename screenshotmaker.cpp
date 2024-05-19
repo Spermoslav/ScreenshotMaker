@@ -24,12 +24,17 @@ void ScreenShotMaker::activate()
 
 void ScreenShotMaker::makeScreenShot(const QString &dir)
 {
-    if(dir == "") {
-        screen->grabScreenShotArea().save(menu->fileDir.dir() + "test" + menu->fileDir.fileExt());
+    if(!dir.isNull()) {
+        if(dir == "NULL") {
+            screen->grabScreenShotArea().save(menu->fileDir.dir() + "test" + menu->fileDir.fileExt());
+        }
+        else {
+            screen->grabScreenShotArea().save(dir);
+            qDebug() << dir;
+        }
     }
     else {
-        screen->grabScreenShotArea().save(dir);
-        qDebug() << dir;
+        qDebug() << "dir - empty";
     }
 }
 

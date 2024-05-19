@@ -20,7 +20,7 @@ public:
 
     void activate();
 
-    void makeScreenShot(const QString &dir = "");
+    void makeScreenShot(const QString &dir = "NULL");
 
     void close();
 
