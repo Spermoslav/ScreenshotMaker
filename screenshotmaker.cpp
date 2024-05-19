@@ -211,7 +211,9 @@ void Screen::moveToolBarDownRight()
 QPixmap Screen::grabScreenShotArea()
 {
     SSArea->setStyleSheet("border: 0px;");
+    toolBar->hide();
     QPixmap pm = grab(QRect(SSArea->x(), SSArea->y(), SSArea->width(), SSArea->height()));
+    toolBar->show();
     SSArea->setStyleSheet(ScreenShotArea::borderStyles);
     return pm;
 }
