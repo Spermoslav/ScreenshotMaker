@@ -17,6 +17,7 @@ set(PROJECT_SOURCES
         menu.cpp
         menu.h
         keys.h
+        keys.cpp
         changekeys.h
         changekeys.cpp
         screenshotmaker.h
