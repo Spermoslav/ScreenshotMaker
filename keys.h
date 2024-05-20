@@ -1,11 +1,47 @@
 #ifndef KEYS_H
 #define KEYS_H
 
+#include "menu.h"
 #include <QString>
 #include <map>
+#include <list>
 
-using KeyPair = std::pair<int, QString>;
-using keyMap  = std::map<int, QString>;
+/* KeyShortcut хранит последовательность клавиш
+ * Eсли все клавиши из этой последовательности нажаты - вызывает заданную функцию
+ * Необходимо через Qtшный класс, используя keyPressEvent и keyReleaseEvent,
+ * вызывать keyPress и keyRelease соответственно
+ * Может работать только с MainWidget (мне впадлу писать шаблон, я его написал только для это класса)
+*/
+class KeyShortcut
+{
+public:
+    KeyShortcut() = default;
+    KeyShortcut(Qt::Key key);
+    KeyShortcut(const std::initializer_list<Qt::Key> &key);
+
+    KeyShortcut &operator = (const KeyShortcut &ks);
+    KeyShortcut &operator += (const KeyShortcut &ks);
+
+    void setFunc(MainWidget *obj, void (MainWidget::*foo) ()) { func = foo; funcObj = obj; }
+
+    void addKey(Qt::Key key);                             // добавляет один key
+    void clear() { keys.clear(); }                        // удаляет все ключи
+
+    void keyPress(Qt::Key key);                           // должен срабатывать, когда нажимается какая-либо клавиша
+    void keyRelease(Qt::Key key);                         // должен срабатывать, когда отжимается какая-либо клавиша
+
+    bool empty() const { return keys.empty(); }
+    int  size()  const { return keys.size(); }
+
+    std::list<Qt::Key> shortcut() const; // вернет список клавиш
+
+    const std::map<Qt::Key, bool> getKeys() const { return keys; }
+
+private:
+    std::map<Qt::Key, bool> keys;               // int - Qt::Key... , bool - true - клавиша нажата
+    void (MainWidget::*func)()  = nullptr;
+    MainWidget *funcObj = nullptr;
+};
 
 // Unicode Basic Latin block
 const keyMap basicKeys =
