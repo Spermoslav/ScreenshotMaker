@@ -196,4 +196,8 @@ inline KeyPair keyToKeyPair(int key)
     return pair;
 }
 
+inline QString keyToString(int key) {
+    return keyToKeyPair(key).second;
+}
+
 #endif // KEYS_H
