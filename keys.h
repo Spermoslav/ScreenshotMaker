@@ -38,7 +38,9 @@ public:
     const std::map<Qt::Key, bool> getKeys() const { return keys; }
 
 private:
-    std::map<Qt::Key, bool> keys;               // int - Qt::Key... , bool - true - клавиша нажата
+    void releaseKeys();                         // всем кнопкам присваивает false
+
+    std::map<Qt::Key, bool> keys;               // int: Qt::Key... , bool: true - клавиша нажата
     void (MainWidget::*func)()  = nullptr;
     MainWidget *funcObj = nullptr;
 };

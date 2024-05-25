@@ -38,6 +38,13 @@ void KeyShortcut::addKey(Qt::Key key)
     keys.emplace(key, false);
 }
 
+void KeyShortcut::releaseKeys()
+{
+    for(auto &p : keys) {
+        p.second = false;
+    }
+}
+
 void KeyShortcut::keyPress(Qt::Key key)
 {
     if(func){
@@ -52,7 +59,10 @@ void KeyShortcut::keyPress(Qt::Key key)
             }
         }
 
-        if(allPress) (funcObj->*func)();
+        if(allPress) {
+            releaseKeys();
+            (funcObj->*func)();
+        }
     }
     else {
         qDebug() << "KeyShortcut::func == nullptr";
@@ -63,7 +73,9 @@ void KeyShortcut::keyRelease(Qt::Key key)
 {
     if(func) {
         for(auto &k : keys) {
-            if(k.first == key) k.second = false;      // кнопке, которую отжали присваеваем false
+            if(k.first == key) {
+                k.second = false;      // кнопке, которую отжали присваеваем false
+            }
         }
     }
     else {
