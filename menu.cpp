@@ -9,6 +9,9 @@
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
 {
+    keys = new KeyShortcut( {Qt::Key_Control, Qt::Key_T} );
+    keys->setFunc(this, &MainWidget::keyShortcutPress);
+
     dirLabel = new QLabel;
     dirLabel->setText(dirLabelStr + "\n" + fileDir.DIR);
 
@@ -49,10 +52,14 @@ MainWidget::~MainWidget()
 {
 }
 
-void MainWidget::setKey(const std::list<KeyPair> &keys)
+void MainWidget::setKey(const std::list<KeyPair> &key)
 {
-    if(!keys.empty()) this->keys = keys;
-
+    if(!key.empty()) {
+        keys->clear();
+        for(auto &k : key) {
+            keys->addKey((Qt::Key)k.first);
+        }
+    }
     else  qDebug() << "setKey(keys) keys - empty";
     updateKeysLabel();
 }
@@ -60,13 +67,6 @@ void MainWidget::setKey(const std::list<KeyPair> &keys)
 void MainWidget::updateKeysLabel()
 {
     if(!keys.empty()) {
-        keyLabel->setText("Сочетание клавиш для скриншота: \n");
-        keyLabel->setText(keyLabel->text() + keys.begin()->second);
-
-        for(int i = 1; i < keys.size(); ++i) {
-            std::list<KeyPair>::iterator it = keys.begin();
-            std::advance(it, i);
-            keyLabel->setText(keyLabel->text() + "+" + it->second);
         }
     }
     else {
@@ -76,14 +76,17 @@ void MainWidget::updateKeysLabel()
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
-    if(e->key() == Qt::Key_F1) {
-        SSMaker->activate();
-    }
+    keys->keyPress((Qt::Key)e->key());
 }
 
 void MainWidget::keyReleaseEvent(QKeyEvent *e)
 {
+    keys->keyRelease((Qt::Key)e->key());
+}
 
+void MainWidget::keyShortcutPress()
+{
+    SSMaker->activate();
 }
 
 void MainWidget::fileExtActivated(int index)

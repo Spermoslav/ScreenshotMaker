@@ -18,6 +18,7 @@ class ScreenShotMaker;
 
 using KeyPair = std::pair<int, QString>;
 using keyMap  = std::map<int, QString>;
+
 class FileConfig // хранит настройки файла
 {
     friend MainWidget;
@@ -39,7 +40,7 @@ public:
     MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
 
-    void setKey(const std::list<KeyPair> &keys);
+    void setKey(const std::list<KeyPair> &key);
     void updateKeysLabel();
 
     FileConfig fileDir;
@@ -48,6 +49,8 @@ private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
 
+    void keyShortcutPress();
+
     void fileExtActivated(int index);
     void dirPBClicked();
     void keyChangePBClicked();
@@ -55,11 +58,7 @@ private slots:
 private:
     ScreenShotMaker *SSMaker;
 
-    std::list<KeyPair> keys = {
-                                {Qt::Key_Control, "Ctrl"},
-                                {Qt::Key_Alt, "Alt"},
-                                {Qt::Key_S, "S"}
-                              };
+    KeyShortcut* keys;
 
     QLabel *dirLabel;
     QLabel *fileExtLabel;
