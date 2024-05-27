@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QFile>
 #include <QFileDialog>
 #include <QPixmap>
 
@@ -31,7 +32,13 @@ void ScreenShotMaker::makeScreenShot(const QString &dir)
 {
     if(!dir.isNull()) {
         if(dir == "NULL") {
-            screen->grabScreenShotArea().save(menu->fileDir.dir() + "test" + menu->fileDir.fileExt());
+            QString filePath = menu->fileDir.dir() + "Screenshot" + menu->fileDir.fileExt(); // полный путь к файлу, который хотим создать
+
+            for(size_t i = 1; QFile::exists(filePath); ++i) {                                // бегаем по циклу, пока filePath уже существует
+                filePath = menu->fileDir.dir() + "Screenshot_" +
+                           QString::number(i)  + menu->fileDir.fileExt();                    // меняем имя файла
+            }
+            screen->grabScreenShotArea().save(filePath);
         }
         else {
             screen->grabScreenShotArea().save(dir);
