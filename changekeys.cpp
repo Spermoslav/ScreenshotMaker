@@ -64,7 +64,7 @@ void ChangeKeys::keyReleaseEvent(QKeyEvent *e)
 void ChangeKeys::savePBClicked()
 {
     parent->setKey(keys);
-    cancelPB->setText("close");
+    close();
 }
 
 void ChangeKeys::cancelPBClicked()
