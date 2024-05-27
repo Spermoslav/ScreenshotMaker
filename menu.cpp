@@ -66,8 +66,14 @@ void MainWidget::setKey(const std::list<KeyPair> &key)
 
 void MainWidget::updateKeysLabel()
 {
-    if(!keys.empty()) {
+    if(!keys->empty()) {
+        QString labelText = "Сочетание клавиш для скриншота: \n";
+
+        for(auto &k : keys->shortcut()) {
+            labelText += keyToString(k) + "+";
         }
+        labelText.erase(labelText.end() - 1);
+        keyLabel->setText(labelText);
     }
     else {
         qDebug() << "in updateKeysLabel()    keys - empty";
