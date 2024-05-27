@@ -6,11 +6,13 @@
 #include <map>
 #include <list>
 
+using KeyStatus = std::pair<Qt::Key, bool>; // true - кнопка нажата
+
 /* KeyShortcut хранит последовательность клавиш
  * Eсли все клавиши из этой последовательности нажаты - вызывает заданную функцию
  * Необходимо через Qtшный класс, используя keyPressEvent и keyReleaseEvent,
  * вызывать keyPress и keyRelease соответственно
- * Может работать только с MainWidget (мне впадлу писать шаблон, я его написал только для это класса)
+ * Может работать только с MainWidget (мне впадлу писать шаблон, я его написал только для этого класса)
 */
 class KeyShortcut
 {
@@ -33,14 +35,14 @@ public:
     bool empty() const { return keys.empty(); }
     int  size()  const { return keys.size(); }
 
-    std::list<Qt::Key> shortcut() const; // вернет список клавиш
+    std::list<Qt::Key> shortcut() const;                  // вернет список клавиш
 
-    const std::map<Qt::Key, bool> getKeys() const { return keys; }
+    const std::list<KeyStatus> getKeys() const { return keys; }
 
 private:
-    void releaseKeys();                         // всем кнопкам присваивает false
+    void releaseKeys();  // всем кнопкам присваивает false
 
-    std::map<Qt::Key, bool> keys;               // int: Qt::Key... , bool: true - клавиша нажата
+    std::list<KeyStatus> keys;
     void (MainWidget::*func)()  = nullptr;
     MainWidget *funcObj = nullptr;
 };

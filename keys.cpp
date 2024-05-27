@@ -3,17 +3,14 @@
 
 KeyShortcut::KeyShortcut(const std::initializer_list<Qt::Key> &key)
 {
-    for(auto k : key) {
-        keys.emplace(k, false);
-    }
-    for(auto k : keys) {
-        qDebug() << k;
+    for(Qt::Key k : key) {
+        keys.push_back(KeyStatus(k, false));
     }
 }
 
 KeyShortcut::KeyShortcut(Qt::Key key)
 {
-    keys.emplace(key, false);
+    keys.push_back(KeyStatus(key, false));
 }
 
 
@@ -25,9 +22,9 @@ KeyShortcut &KeyShortcut::operator =(const KeyShortcut &ks)
 
 KeyShortcut &KeyShortcut::operator +=(const KeyShortcut &ks)
 {
-    for(auto k : ks.keys) {
-        if(keys.find(k.first) == keys.end()) {
-            keys.emplace(k);
+    for(KeyStatus k : ks.keys) {
+        if(std::find(keys.begin(), keys.end(), k) == keys.end()) {
+            keys.push_back(k);
         }
     }
     return *this;
@@ -35,12 +32,12 @@ KeyShortcut &KeyShortcut::operator +=(const KeyShortcut &ks)
 
 void KeyShortcut::addKey(Qt::Key key)
 {
-    keys.emplace(key, false);
+    keys.push_back(KeyStatus(key, false));
 }
 
 void KeyShortcut::releaseKeys()
 {
-    for(auto &p : keys) {
+    for(KeyStatus &p : keys) {
         p.second = false;
     }
 }
@@ -49,19 +46,19 @@ void KeyShortcut::keyPress(Qt::Key key)
 {
     if(func){
         bool allPress = false;
-        (*keys.find(key)).second = true;             // кнопке, которую нажали присваеваем true
+        (*std::find(keys.begin(), keys.end(), KeyStatus(key, false))).second = true;  // кнопке, которую нажали присваеваем true
 
-        for(auto &m : keys) {
-            if(m.second == true) allPress = true;    // проверяем, все ли кнопки из мапы нажаты
+        for(const KeyStatus &m : keys) {
+            if(m.second == true) allPress = true;                   // проверяем, все ли кнопки нажаты
             else {
                 allPress = false;
                 break;
             }
         }
 
-        if(allPress) {
-            releaseKeys();
-            (funcObj->*func)();
+        if(allPress) {                      // если все кнопки нажаты,
+            releaseKeys();                  // присваиваем всем кнопкам false
+            (funcObj->*func)();             // и вызываем функцию.
         }
     }
     else {
@@ -72,7 +69,7 @@ void KeyShortcut::keyPress(Qt::Key key)
 void KeyShortcut::keyRelease(Qt::Key key)
 {
     if(func) {
-        for(auto &k : keys) {
+        for(KeyStatus &k : keys) {
             if(k.first == key) {
                 k.second = false;      // кнопке, которую отжали присваеваем false
             }
@@ -86,7 +83,7 @@ void KeyShortcut::keyRelease(Qt::Key key)
 std::list<Qt::Key> KeyShortcut::shortcut() const
 {
     std::list<Qt::Key> key;
-    for(auto &k : keys) {
+    for(const KeyStatus &k : keys) {
         key.push_back(k.first);
     }
     return key;
