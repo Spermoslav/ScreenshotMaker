@@ -10,12 +10,14 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <list>
-#include "keys.h"
 
+class KeyShortcut;
 class MainWidget;
 class ChangeKeys;
 class ScreenShotMaker;
 
+using KeyPair = std::pair<int, QString>;
+using keyMap  = std::map<int, QString>;
 class FileConfig // хранит настройки файла
 {
     friend MainWidget;
