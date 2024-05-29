@@ -2,6 +2,7 @@
 #define PIN_H
 
 #include <QWidget>
+#include <QPoint>
 
 enum Placement
 {
@@ -36,6 +37,17 @@ public:
     void moveRightDown();
     void moveDownLeft();
     void moveDownRight();
+
+    QPoint checkLeftUp();      // возвращают будущую позицию pinner
+    QPoint checkLeftDown();
+    QPoint checkUpLeft();
+    QPoint checkUpRight();
+    QPoint checkRightUp();
+    QPoint checkRightDown();
+    QPoint checkDownLeft();
+    QPoint checkDownRight();
+
+    uint getIndent() const { return indent; }
 
 private:
     QWidget* pinner;        // объект, который прикрепляется

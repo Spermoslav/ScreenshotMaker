@@ -51,88 +51,144 @@ void Pin::update()
 
 void Pin::moveLeftUp()
 {
-    if(isOut) {
-        pinner->move(obj->x() - indent - pinner->width(), obj->y());
-    }
-    else {
-        pinner->move(obj->x() + indent, obj->y() + indent);
-    }
+    pinner->move(checkLeftUp());
     placement = LeftUp;
 }
 
 void Pin::moveLeftDown()
 {
-    if(isOut) {
-        pinner->move(obj->x() - indent - pinner->width(), obj->y() + obj->height() - indent - pinner->height());
-    }
-    else {
-        pinner->move(obj->x() + indent, obj->y() + obj->height() - indent - pinner->height());
-    }
+    pinner->move(checkLeftDown());
     placement = LeftDown;
 }
 
 void Pin::moveUpLeft()
 {
-    if(isOut) {
-        pinner->move(obj->x(), obj->y() - indent - pinner->height());
-    }
-    else {
-        pinner->move(obj->x() + indent, obj->y() + indent);
-    }
+    pinner->move(checkUpLeft());
     placement = UpLeft;
 }
 
 void Pin::moveUpRight()
 {
-    if(isOut) {
-        pinner->move(obj->x() + obj->width() - pinner->width(), obj->y() - indent - pinner->height());
-    }
-    else {
-        pinner->move(obj->x() + obj->width() - pinner->width() - indent, obj->y() + indent);
-    }
+    pinner->move(checkUpRight());
     placement = UpRight;
 }
 
 void Pin::moveRightUp()
 {
-    if(isOut) {
-        pinner->move(obj->x() + obj->width() + indent, obj->y());
-    }
-    else {
-        pinner->move(obj->x() + obj->width() - pinner->width() - indent, obj->y() + indent);
-    }
+    pinner->move(checkRightUp());
     placement = RightUp;
 }
 
 void Pin::moveRightDown()
 {
-    if(isOut) {
-        pinner->move(obj->x() + obj->width() + indent, obj->y() + obj->height() - pinner->height());
-    }
-    else {
-        pinner->move(obj->x() + obj->width() - pinner->width() - indent, obj->y() + obj->height() - pinner->height() - indent);
-    }
+    pinner->move(checkRightDown());
     placement = RightDown;
 }
 
 void Pin::moveDownLeft()
 {
-    if(isOut) {
-        pinner->move(obj->x(), obj->y() + obj->height() + indent);
-    }
-    else {
-        pinner->move(obj->x() + indent, obj->y() + obj->height() - pinner->height() - indent);
-    }
+    pinner->move(checkDownLeft());
     placement = DownLeft;
 }
 
 void Pin::moveDownRight()
 {
+    pinner->move(checkDownRight());
+    placement = DownRight;
+}
+
+QPoint Pin::checkLeftUp()
+{
+    QPoint pos;
     if(isOut) {
-        pinner->move(obj->x() + obj->width() - pinner->width(), obj->y() + obj->height() + indent);
+        pos = QPoint(obj->x() - indent - pinner->width(), obj->y());
     }
     else {
-        pinner->move(obj->x() + obj->width() - pinner->width() - indent, obj->y() + obj->height() - pinner->height() - indent);
+        pos = QPoint(obj->x() + indent, obj->y() + indent);
     }
-    placement = DownRight;
+    return pos;
+}
+
+QPoint Pin::checkLeftDown()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x() - indent - pinner->width(), obj->y() + obj->height() - indent - pinner->height());
+    }
+    else {
+        pos = QPoint(obj->x() + indent, obj->y() + obj->height() - indent - pinner->height());
+    }
+    return pos;
+}
+
+QPoint Pin::checkUpLeft()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x(), obj->y() - indent - pinner->height());
+    }
+    else {
+        pos = QPoint(obj->x() + indent, obj->y() + indent);
+    }
+    return pos;
+}
+
+QPoint Pin::checkUpRight()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x() + obj->width() - pinner->width(), obj->y() - indent - pinner->height());
+    }
+    else {
+        pos = QPoint(obj->x() + obj->width() - pinner->width() - indent, obj->y() + indent);
+    }
+    return pos;
+}
+
+QPoint Pin::checkRightUp()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x() + obj->width() + indent, obj->y());
+    }
+    else {
+        pos = QPoint(obj->x() + obj->width() - pinner->width() - indent, obj->y() + indent);
+    }
+    return pos;
+}
+
+QPoint Pin::checkRightDown()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x() + obj->width() + indent, obj->y() + obj->height() - pinner->height());
+    }
+    else {
+        pos = QPoint(obj->x() + obj->width() - pinner->width() - indent, obj->y() + obj->height() - pinner->height() - indent);
+    }
+    return pos;
+}
+
+QPoint Pin::checkDownLeft()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x(), obj->y() + obj->height() + indent);
+    }
+    else {
+        pos = QPoint(obj->x() + indent, obj->y() + obj->height() - pinner->height() - indent);
+    }
+    return pos;
+}
+
+QPoint Pin::checkDownRight()
+{
+    QPoint pos;
+    if(isOut) {
+        pos = QPoint(obj->x() + obj->width() - pinner->width(), obj->y() + obj->height() + indent);
+    }
+    else {
+        pos = QPoint(obj->x() + obj->width() - pinner->width() - indent, obj->y() + obj->height() - pinner->height() - indent);
+    }
+    return pos;
 }
