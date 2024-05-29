@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
         changekeys.cpp
         screenshotmaker.h
         screenshotmaker.cpp
+        pin.h
+        pin.cpp
         defines.h
 )
 
