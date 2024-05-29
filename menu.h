@@ -10,6 +10,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <list>
+#include "defines.h"
 
 class KeyShortcut;
 class MainWidget;
