@@ -360,3 +360,28 @@ void ToolBar::closePBClicked()
 {
     SSMaker->close();
 }
+
+ShowRect::ShowRect(QWidget *parent, const QWidget *obj)
+    : QLabel(parent)
+{
+    this->obj = obj;
+    this->parent = parent;
+    setText(QString::number(obj->width()) + "x" + QString::number(obj->width()));
+    setAlignment(Qt::AlignCenter);
+}
+
+void ShowRect::update()
+{
+    setText(QString::number(obj->width()) + "x" + QString::number(obj->width()));
+    updateWidth();
+}
+
+void ShowRect::updateWidth()
+{
+    if(text().size() <= 5) {
+        resize(font().pointSize() * text().size() * 0.9, height());
+    }
+    else {
+        resize(font().pointSize() * text().size() * 0.8, height());
+    }
+}
