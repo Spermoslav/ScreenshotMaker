@@ -8,10 +8,13 @@
 #include <QLabel>
 #include <QPushButton>
 
+#include "pin.h"
+
 class MainWidget;
 class Screen;
-class ScreenShotArea; // зона скриншота
-class ToolBar; // инструменты для взаимодействия с ScreenShotArea
+class ScreenShotArea;   // зона скриншота
+class ToolBar;          // инструменты для взаимодействия с ScreenShotArea
+class ShowRect;         // выводит размеры виджета "width() x height()"
 
 class ScreenShotMaker : public QWidget
 {
@@ -41,15 +44,6 @@ public:
     void reset();
 
     void updateToolsBarPos();
-
-    void moveToolBarLeftUp(); // перемещают toolBar слева/вверху/справа/внизу и внутри/снаружи ScreenShotArea
-    void moveToolBarLeftDown();
-    void moveToolBarUpLeft();
-    void moveToolBarUpRight();
-    void moveToolBarRightUp();
-    void moveToolBarRightDown();
-    void moveToolBarDownLeft();
-    void moveToolBarDownRight();
 
     QPixmap grabScreenShotArea();
 
@@ -81,8 +75,9 @@ private:
 
     ScreenShotArea *SSArea;
     ToolBar *toolBar;
+    ShowRect *SSAreaRect;
 
-    int tbIndent = 10; // отступ toolBar от ScreenShotArea
+    Pin toolBarPin;
 
 // Отвечают, какой параметр будет изменяться у ScreenShotArea при перемещении мыши
     bool changeY; // true - менятся позиция по y, false - меняться height

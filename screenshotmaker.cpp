@@ -95,6 +95,8 @@ Screen::Screen(ScreenShotMaker *parent)
                            "border: 1px solid black;");
     toolBar->hide();
 
+    toolBarPin = Pin(toolBar, SSArea);
+
     update();
 }
 
@@ -112,106 +114,55 @@ void Screen::updateToolsBarPos()
 {
     if(changeX) {
         if(changeY) {
-            if(SSArea->x() - tbIndent - toolBar->width() >= x()) {
+            if(toolBarPin.checkLeftUp().x() >= x()) {
                 toolBar->setVertical();
-                moveToolBarLeftUp();
+                toolBarPin.setOut(true);
+                toolBarPin.moveLeftUp();
             }
             else {
                 toolBar->setHorizontal();
-                moveToolBarUpLeft();
+                toolBarPin.setOut(false);
+                toolBarPin.moveUpLeft();
             }
         }
         else {
-            if(SSArea->x() - tbIndent - toolBar->width() >= x()) {
+            if(toolBarPin.checkLeftDown().x() >= x()) {
                 toolBar->setVertical();
-                moveToolBarLeftDown();
+                toolBarPin.setOut(true);
+                toolBarPin.moveLeftDown();
             }
             else {
                 toolBar->setHorizontal();
-                moveToolBarDownLeft();
+                toolBarPin.setOut(false);
+                toolBarPin.moveDownLeft();
             }
         }
     }
     else {
         if(changeY) {
-            if(SSArea->x() + SSArea->width() + tbIndent + toolBar->width() <= width()) {
+            if(toolBarPin.checkRightUp().x() <= width()) {
                 toolBar->setVertical();
-                moveToolBarRightUp();
+                toolBarPin.setOut(true);
+                toolBarPin.moveRightUp();
             }
             else {
                 toolBar->setHorizontal();
-                moveToolBarUpRight();
+                toolBarPin.setOut(false);
+                toolBarPin.moveUpRight();
             }
         }
         else {
-            if(SSArea->x() + SSArea->width() + tbIndent + toolBar->width() <= width()) {
+            if(toolBarPin.checkRightDown().x() <= width()) {
                 toolBar->setVertical();
-                moveToolBarRightDown();
+                toolBarPin.setOut(true);
+                toolBarPin.moveRightDown();
             }
             else {
                 toolBar->setHorizontal();
-                moveToolBarDownRight();
+                toolBarPin.setOut(false);
+                toolBarPin.moveDownRight();
             }
         }
-    }
-}
-void Screen::moveToolBarLeftUp()
-{
-    toolBar->move(SSArea->x() - tbIndent - toolBar->width(), SSArea->y());
-}
-
-void Screen::moveToolBarLeftDown()
-{
-    toolBar->move(SSArea->x() - tbIndent - toolBar->width(), SSArea->y() + SSArea->height() - tbIndent - toolBar->height());
-}
-
-void Screen::moveToolBarUpLeft()
-{
-    if(SSArea->y() - toolBar->height() - tbIndent < y()) {
-        toolBar->move(SSArea->x() + tbIndent, SSArea->y() + tbIndent);
-    }
-    else {
-        toolBar->move(SSArea->x(), SSArea->y() - tbIndent - toolBar->height());
-    }
-}
-
-void Screen::moveToolBarUpRight()
-{
-    if(SSArea->y() - toolBar->height() - tbIndent < y()) {
-        toolBar->move(SSArea->x() + SSArea->width() - toolBar->width() - tbIndent, SSArea->y() + tbIndent);
-    }
-    else {
-        toolBar->move(SSArea->x() + SSArea->width() - toolBar->width(), SSArea->y() - tbIndent - toolBar->height());
-    }
-}
-
-void Screen::moveToolBarRightUp()
-{
-    toolBar->move(SSArea->x() + SSArea->width() + tbIndent, SSArea->y());
-}
-
-void Screen::moveToolBarRightDown()
-{
-    toolBar->move(SSArea->x() + SSArea->width() + tbIndent, SSArea->y() + SSArea->height() - toolBar->height());
-}
-
-void Screen::moveToolBarDownLeft()
-{
-    if(SSArea->x() + SSArea->width() + toolBar->height() + tbIndent > width()) {
-        toolBar->move(SSArea->x() + tbIndent, SSArea->y() + SSArea->height() - tbIndent - toolBar->height());
-    }
-    else {
-        toolBar->move(SSArea->x(), SSArea->y() + SSArea->height() + tbIndent);
-    }
-}
-
-void Screen::moveToolBarDownRight()
-{
-    if(SSArea->y() + SSArea->height() + toolBar->height() + tbIndent > height()) {
-        toolBar->move(SSArea->x() + SSArea->width() - toolBar->width() - tbIndent, SSArea->y() + SSArea->height() - toolBar->height() - tbIndent);
-    }
-    else {
-        toolBar->move(SSArea->x() + SSArea->width() - toolBar->width(), SSArea->y() + SSArea->height() + tbIndent);
     }
 }
 
@@ -249,7 +200,6 @@ void Screen::mousePressEvent(QMouseEvent *e)
 
 void Screen::mouseReleaseEvent(QMouseEvent *e)
 {
-    qDebug() << SSArea->rect();
     toolBar->show();
     updateToolsBarPos();
 }
