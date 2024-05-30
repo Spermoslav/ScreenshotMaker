@@ -95,6 +95,12 @@ Screen::Screen(ScreenShotMaker *parent)
                            "border: 1px solid black;");
     toolBar->hide();
 
+    SSAreaRect = new ShowRect(this, SSArea);
+    SSAreaRect->setStyleSheet("border: 1px solid black;"
+                              "border-radius: 7px;"
+                              "background-color: rgb(200, 200, 200);");
+    SSAreaRect->setFont(QFont(SSAreaRect->font().family(), 20));
+
     toolBarPin = Pin(toolBar, SSArea);
 
     update();
@@ -208,6 +214,7 @@ void Screen::mouseMoveEvent(QMouseEvent *e)
 {
     if(e->buttons() == Qt::LeftButton) {
         expScreenArea(e);
+        SSAreaRect->update();
     }
 }
 
