@@ -279,11 +279,6 @@ ScreenShotArea::ScreenShotArea(Screen *sa)
     parent = sa;
 }
 
-void ScreenShotArea::makeScreenShot()
-{
-
-}
-
 void ScreenShotArea::resizeEvent(QResizeEvent *e)
 {
 

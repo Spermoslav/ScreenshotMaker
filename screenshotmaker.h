@@ -92,8 +92,6 @@ class ScreenShotArea : public QGroupBox
 public:
     ScreenShotArea(Screen *sa);
 
-    void makeScreenShot();
-
     const static inline QString borderStyles = "border: 2px dashed grey;";
 private slots:
     void resizeEvent(QResizeEvent *e) override;
