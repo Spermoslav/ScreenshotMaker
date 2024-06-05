@@ -49,6 +49,8 @@ public:
 
     uint getIndent() const { return indent; }
 
+    Placement place() const { return placement; }
+
 private:
     QWidget* pinner;        // объект, который прикрепляется
     const QWidget* obj;     // объект, к которому прикрепляются
