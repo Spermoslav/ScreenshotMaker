@@ -103,6 +103,8 @@ Screen::Screen(ScreenShotMaker *parent)
 
     toolBarPin = Pin(toolBar, SSArea);
 
+    SSAreaRectPin = Pin(SSAreaRect, SSArea);
+
     update();
 }
 
@@ -172,6 +174,15 @@ void Screen::updateToolsBarPos()
     }
 }
 
+void Screen::updateSSAreaRectPos()
+{
+    SSAreaRectPin.setOut(true);
+    if(SSAreaRectPin.checkUpLeft().y() < 0) {
+        SSAreaRectPin.setOut(false);
+    }
+    SSAreaRectPin.moveUpLeft();
+}
+
 QPixmap Screen::grabScreenShotArea()
 {
     SSArea->setStyleSheet("border: 0px;");
@@ -199,8 +210,10 @@ void Screen::mousePressEvent(QMouseEvent *e)
         gb_2->setGeometry(gb_1->width(), 0, width(), e->pos().y());
         gb_3->setGeometry(0, e->pos().y(), e->pos().x(), height());
         gb_4->setGeometry(e->pos().x(), e->pos().y(), width(), height());
+
         SSArea->setGeometry(gb_4->x(), gb_3->y(), gb_1->width() - gb_4->x(), gb_2->height() - gb_3->y());
         SSArea->show();
+        SSAreaRectPin.update();
     }
 }
 
@@ -215,6 +228,7 @@ void Screen::mouseMoveEvent(QMouseEvent *e)
     if(e->buttons() == Qt::LeftButton) {
         expScreenArea(e);
         SSAreaRect->update();
+        if(changeX || changeY ) updateSSAreaRectPos();
     }
 }
 

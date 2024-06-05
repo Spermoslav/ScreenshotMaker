@@ -44,6 +44,7 @@ public:
     void reset();
 
     void updateToolsBarPos();
+    void updateSSAreaRectPos();
 
     QPixmap grabScreenShotArea();
 
@@ -78,6 +79,7 @@ private:
     ShowRect *SSAreaRect;
 
     Pin toolBarPin;
+    Pin SSAreaRectPin;
 
 // Отвечают, какой параметр будет изменяться у ScreenShotArea при перемещении мыши
     bool changeY; // true - менятся позиция по y, false - меняться height
