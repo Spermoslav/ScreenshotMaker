@@ -100,6 +100,7 @@ Screen::Screen(ScreenShotMaker *parent)
                               "border-radius: 7px;"
                               "background-color: rgb(200, 200, 200);");
     SSAreaRect->setFont(QFont(SSAreaRect->font().family(), 20));
+    SSAreaRect->hide();
 
     toolBarPin = Pin(toolBar, SSArea);
 
@@ -116,6 +117,7 @@ void Screen::reset()
     gb_4->setGeometry(width() / 2, height() / 2, width() / 2, height() / 2);
     SSArea->hide();
     toolBar->hide();
+    SSAreaRect->hide();
 }
 
 void Screen::updateToolsBarPos()
@@ -213,6 +215,7 @@ void Screen::mousePressEvent(QMouseEvent *e)
 
         SSArea->setGeometry(gb_4->x(), gb_3->y(), gb_1->width() - gb_4->x(), gb_2->height() - gb_3->y());
         SSArea->show();
+        SSAreaRect->show();
         SSAreaRectPin.update();
     }
 }
