@@ -368,13 +368,13 @@ ShowRect::ShowRect(QWidget *parent, const QWidget *obj)
 {
     this->obj = obj;
     this->parent = parent;
-    setText(QString::number(obj->width()) + "x" + QString::number(obj->width()));
+    setText(QString::number(obj->width()) + "x" + QString::number(obj->height()));
     setAlignment(Qt::AlignCenter);
 }
 
 void ShowRect::update()
 {
-    setText(QString::number(obj->width()) + "x" + QString::number(obj->width()));
+    setText(QString::number(obj->width()) + "x" + QString::number(obj->height()));
     updateWidth();
 }
 
