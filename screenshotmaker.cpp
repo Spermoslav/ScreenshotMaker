@@ -122,23 +122,36 @@ void Screen::reset()
 
 void Screen::updateToolsBarPos()
 {
+    toolBarPin.setOut(true);
     if(changeX) {
         if(changeY) {
             if(toolBarPin.checkLeftUp().x() >= x()) {
                 toolBar->setVertical();
-                toolBarPin.setOut(true);
                 toolBarPin.moveLeftUp();
             }
             else {
-                toolBar->setHorizontal();
-                toolBarPin.setOut(false);
-                toolBarPin.moveUpLeft();
+                if(SSAreaRectPin.place() == UpLeft) {
+                    if(toolBarPin.checkRightDown().x() + toolBar->width() <= width()) {
+                        toolBar->setVertical();
+                        toolBarPin.moveRightDown();
+                    }
+                    else if(toolBarPin.checkDownRight().y() + toolBar->height() <= height()) {
+                        toolBar->setHorizontal();
+                        toolBarPin.moveDownRight();
+                    }
+                    else {
+                        toolBar->setHorizontal();
+                        toolBarPin.setOut(false);
+                        toolBarPin.moveDownRight();
+                    }
+
+                }
+                else toolBarPin.moveUpLeft();
             }
         }
         else {
             if(toolBarPin.checkLeftDown().x() >= x()) {
                 toolBar->setVertical();
-                toolBarPin.setOut(true);
                 toolBarPin.moveLeftDown();
             }
             else {
@@ -152,7 +165,6 @@ void Screen::updateToolsBarPos()
         if(changeY) {
             if(toolBarPin.checkRightUp().x() <= width()) {
                 toolBar->setVertical();
-                toolBarPin.setOut(true);
                 toolBarPin.moveRightUp();
             }
             else {
@@ -162,9 +174,8 @@ void Screen::updateToolsBarPos()
             }
         }
         else {
-            if(toolBarPin.checkRightDown().x() <= width()) {
+            if(toolBarPin.checkRightDown().x() + toolBar->width() <= width()) {
                 toolBar->setVertical();
-                toolBarPin.setOut(true);
                 toolBarPin.moveRightDown();
             }
             else {
