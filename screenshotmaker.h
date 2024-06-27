@@ -7,6 +7,8 @@
 #include <QMouseEvent>
 #include <QLabel>
 #include <QPushButton>
+#include <QClipboard>
+#include <QApplication>
 
 #include "pin.h"
 
@@ -118,14 +120,16 @@ private slots:
 
     void fastSavePBClicked(); // быстрое сохранение скрина с настройками конфига
     void savePBClicked();     // выбор пути, имени и расширения файла
+    void saveClipboardPBClicked();
     void closePBClicked();
 
 private:
-    Screen *parent;
+    Screen *screen;
     ScreenShotMaker *SSMaker;
 
     QPushButton *fastSavePB;
     QPushButton *savePB;
+    QPushButton *saveClipboardPB;
     QPushButton *closePB;
 
     bool isVertical = true; // true - вертикально расположен, false - горизонтально

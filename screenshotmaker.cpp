@@ -322,11 +322,11 @@ void ScreenShotArea::resizeEvent(QResizeEvent *e)
 ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
     : QGroupBox(parent)
 {
-    this->parent = parent;
+    this->screen = parent;
     SSMaker = ssm;
 
     setCursor(QCursor(Qt::PointingHandCursor));
-    resize(30, 90);
+    resize(30, 120);
 
     fastSavePB = new QPushButton("fast", this);
     connect(fastSavePB, &QPushButton::clicked, this, &ToolBar::fastSavePBClicked);
@@ -336,6 +336,9 @@ ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
 
     closePB = new QPushButton("X", this);
     connect(closePB, &QPushButton::clicked, this, &ToolBar::closePBClicked);
+
+    saveClipboardPB = new QPushButton("copy", this);
+    connect(saveClipboardPB, &QPushButton::clicked, this, &ToolBar::saveClipboardPBClicked);
 }
 
 void ToolBar::setVertical()
@@ -352,11 +355,11 @@ void ToolBar::rotate()
 {
     if(isVertical) {
         isVertical = false;
-        resize(90, 30);
+        resize(120, 30);
     }
     else {
         isVertical = true;
-        resize(30, 90);
+        resize(30, 120);
     }
 }
 
@@ -365,12 +368,14 @@ void ToolBar::resizeEvent(QResizeEvent *e)
     if(isVertical) {
         fastSavePB->resize(width(), width());
         savePB->setGeometry(0, fastSavePB->y() + width(), width(), width());
-        closePB->setGeometry(0, savePB->y() + width(), width(), width());
+        saveClipboardPB->setGeometry(0, savePB->y() + width(), width(), width());
+        closePB->setGeometry(0, saveClipboardPB->y() + width(), width(), width());
     }
     else {
         fastSavePB->resize(height(), height());
         savePB->setGeometry(fastSavePB->x() + height(), 0, height(), height());
-        closePB->setGeometry(savePB->x() + height(), 0, height(), height());
+        saveClipboardPB->setGeometry(savePB->x() + height(), 0, height(), height());
+        closePB->setGeometry(saveClipboardPB->x() + height(), 0, height(), height());
     }
 }
 
@@ -383,6 +388,12 @@ void ToolBar::fastSavePBClicked()
 void ToolBar::savePBClicked()
 {
     SSMaker->makeScreenShot(QFileDialog::getSaveFileName(this, "Выберите директорию", FileConfig::dir(), FileConfig::EXT_LIST));
+    SSMaker->close();
+}
+
+void ToolBar::saveClipboardPBClicked()
+{
+    QApplication::clipboard()->setPixmap(screen->grabScreenShotArea());
     SSMaker->close();
 }
 
