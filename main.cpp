@@ -1,6 +1,9 @@
 #include "menu.h"
+#include "keyboardhook.h"
 
 #include <QApplication>
+
+extern HHOOK hook;
 
 int main(int argc, char *argv[])
 {
@@ -9,5 +12,8 @@ int main(int argc, char *argv[])
     w.setMinimumSize(250, 500);
     w.setGeometry(200, 200, 400, 650);
     w.show();
+
+    hook = SetWindowsHookEx(WH_KEYBOARD_LL, HookCallBack, NULL, 0);
+
     return a.exec();
 }
