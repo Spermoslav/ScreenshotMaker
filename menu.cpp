@@ -5,10 +5,13 @@
 #include "menu.h"
 #include "changekeys.h"
 #include "screenshotmaker.h"
+#include "keyboardhook.h"
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
 {
+    Call::setMenu(this, keyEvent);
+
     keys = new KeyShortcut( {Qt::Key_Control, Qt::Key_T} );
     keys->setFunc(this, &MainWidget::keyShortcutPress);
 
