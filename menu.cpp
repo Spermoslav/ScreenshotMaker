@@ -117,3 +117,10 @@ void MainWidget::keyChangePBClicked()
 {
     changeKeys->show();
 }
+
+void MainWidget::keyEvent(KeyStatus ks)
+{
+    if(ks.second) keys->keyPress(ks.first);
+    else          keys->keyRelease(ks.first);
+}
+

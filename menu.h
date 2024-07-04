@@ -37,7 +37,6 @@ private:
 class MainWidget : public QWidget
 {
     Q_OBJECT
-
 public:
     MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
@@ -58,6 +57,8 @@ private slots:
     void keyChangePBClicked();
 
 private:
+    void keyEvent(KeyStatus ks);
+
     ScreenShotMaker *SSMaker;
 
     KeyShortcut* keys;
