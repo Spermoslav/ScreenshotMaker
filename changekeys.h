@@ -10,10 +10,12 @@
 #include <list>
 #include "menu.h"
 #include "keys.h"
+#include "windows.h"
 
 class ChangeKeys : public QWidget
 {
     Q_OBJECT
+    friend LRESULT CALLBACK HookCallBack(int nCode, WPARAM wParam, LPARAM lParam);
 public:
     ChangeKeys(MainWidget *mw);
 

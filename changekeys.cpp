@@ -1,9 +1,12 @@
 #include "changekeys.h"
+#include "keyboardhook.h"
 
 ChangeKeys::ChangeKeys(MainWidget *mw)
     : QWidget()
 {
     setWindowTitle("Нажмите нужные клавиши");
+
+    Call::setChangeKeys(this, keyEvent);
 
     parent = mw;
 
