@@ -6,8 +6,6 @@
 #include <map>
 #include <list>
 
-using KeyStatus = std::pair<Qt::Key, bool>; // true - кнопка нажата
-
 /* KeyShortcut хранит последовательность клавиш
  * Eсли все клавиши из этой последовательности нажаты - вызывает заданную функцию
  * Необходимо через Qtшный класс, используя keyPressEvent и keyReleaseEvent,

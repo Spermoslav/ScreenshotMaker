@@ -17,6 +17,7 @@ class MainWidget;
 class ChangeKeys;
 class ScreenShotMaker;
 
+using KeyStatus = std::pair<Qt::Key, bool>; // true - кнопка нажата
 using KeyPair = std::pair<int, QString>;
 using keyMap  = std::map<int, QString>;
 
