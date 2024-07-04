@@ -192,6 +192,9 @@ inline KeyPair keyToKeyPair(int key)
     else if(key >= 0x01000030 && key <=  0x0100003b) {
         pair = *(funcKeys.find(key));
     }
+    else if(key == 22869) {
+        pair = KeyPair(22869, "PrtScr");
+    }
     else return KeyPair(-1, "NULL");
     return pair;
 }
