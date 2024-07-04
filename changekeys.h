@@ -18,14 +18,16 @@ public:
     ChangeKeys(MainWidget *mw);
 
     void show();
-private slots:
-    void keyPressEvent(QKeyEvent *e)   override;
-    void keyReleaseEvent(QKeyEvent *e) override;
 
+private slots:
     void savePBClicked();
     void cancelPBClicked();
 
 private:
+    void keyEvent(KeyStatus ks);
+    void keyPress(Qt::Key ks);
+    void keyRelease();
+
     MainWidget *parent;
 
     QLabel *keysLabel;

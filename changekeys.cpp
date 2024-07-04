@@ -34,33 +34,6 @@ void ChangeKeys::show()
     keys.clear();
 }
 
-void ChangeKeys::keyPressEvent(QKeyEvent *e)
-{
-    cancelPB->setText("cancel");
-
-    savePB->setDisabled(true);
-    cancelPB->setDisabled(true);
-
-    if(keysChanged) {
-        keysLabel->setText("");
-        keys.clear();
-        keysLabel->setText(keysLabel->text() + keyToKeyPair(e->key()).second);
-        keys.push_back(keyToKeyPair(e->key()));
-        keysChanged = false;
-    }
-    else {
-        keysLabel->setText(keysLabel->text() + "+" + keyToKeyPair(e->key()).second);
-        keys.push_back(keyToKeyPair(e->key()));
-    }
-}
-
-void ChangeKeys::keyReleaseEvent(QKeyEvent *e)
-{
-    keysChanged = true;
-    savePB->setDisabled(false);
-    cancelPB->setDisabled(false);
-}
-
 void ChangeKeys::savePBClicked()
 {
     parent->setKey(keys);
@@ -73,4 +46,37 @@ void ChangeKeys::cancelPBClicked()
     keys.clear();
     keysChanged = true;
     hide();
+}
+
+void ChangeKeys::keyEvent(KeyStatus ks)
+{
+    if(ks.second) keyPress(ks.first);
+    else keyRelease();
+}
+
+void ChangeKeys::keyPress(Qt::Key ks)
+{
+    cancelPB->setText("cancel");
+
+    savePB->setDisabled(true);
+    cancelPB->setDisabled(true);
+
+    if(keysChanged) {
+        keysLabel->setText("");
+        keys.clear();
+        keysLabel->setText(keysLabel->text() + keyToKeyPair(ks).second);
+        keys.push_back(keyToKeyPair(ks));
+        keysChanged = false;
+    }
+    else {
+        keysLabel->setText(keysLabel->text() + "+" + keyToKeyPair(ks).second);
+        keys.push_back(keyToKeyPair(ks));
+    }
+}
+
+void ChangeKeys::keyRelease()
+{
+    keysChanged = true;
+    savePB->setDisabled(false);
+    cancelPB->setDisabled(false);
 }
