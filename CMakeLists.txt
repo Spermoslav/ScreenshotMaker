@@ -25,6 +25,8 @@ set(PROJECT_SOURCES
         pin.h
         pin.cpp
         defines.h
+        keyboardhook.h
+        keyboardhook.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
