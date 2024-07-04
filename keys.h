@@ -200,4 +200,6 @@ inline QString keyToString(int key) {
     return keyToKeyPair(key).second;
 }
 
+Qt::Key winKeyToKey(int key); // Виндовскую кодировку кнопок конвертирует в Qtшную
+
 #endif // KEYS_H
