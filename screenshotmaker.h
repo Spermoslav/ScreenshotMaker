@@ -11,12 +11,12 @@
 #include <QApplication>
 
 #include "pin.h"
+#include "showrect.h"
 
 class MainWidget;
 class Screen;
 class ScreenShotArea;   // зона скриншота
 class ToolBar;          // инструменты для взаимодействия с ScreenShotArea
-class ShowRect;         // выводит размеры виджета "width() x height()"
 
 class ScreenShotMaker : public QWidget
 {
@@ -133,18 +133,6 @@ private:
     QPushButton *closePB;
 
     bool isVertical = true; // true - вертикально расположен, false - горизонтально
-};
-
-// Отображает размеры заданного виджета
-class ShowRect : public QLabel
-{
-public:
-    ShowRect(QWidget *parent, const QWidget *obj);
-    void update();              // обновляет текст согласно размерам виджета
-    void updateWidth();         // обновляет свой размер под размеры текста
-private:
-    QWidget *parent;
-    const QWidget *obj;         // объект, размеры которого отображает
 };
 
 #endif // SCREENSHOTMAKER_H
