@@ -14,21 +14,21 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        menu.cpp
-        menu.h
-        keys.h
-        keys.cpp
-        changekeys.h
-        changekeys.cpp
-        screenshotmaker.h
-        screenshotmaker.cpp
-        pin.h
-        pin.cpp
         defines.h
-        keyboardhook.h
-        keyboardhook.cpp
-        showrect.h
-        showrect.cpp
+        KeyBoardHook/keyboardhook.h
+        KeyBoardHook/keyboardhook.cpp
+        SSMaker/screenshotmaker.h
+        SSMaker/screenshotmaker.cpp
+        ShowRect/showrect.h
+        ShowRect/showrect.cpp
+        menu/changekeys.h
+        menu/changekeys.cpp
+        keys/keys.h
+        keys/keys.cpp
+        menu/menu.h
+        menu/menu.cpp
+        pin/pin.h
+        pin/pin.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -55,6 +55,17 @@ else()
 endif()
 
 target_link_libraries(ScreenshotMaker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+target_include_directories(ScreenshotMaker PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+include_directories(
+    ShowRect
+    SSMaker
+    pin
+    KeyBoardHook
+    keys
+    menu
+)
 
 set_target_properties(ScreenshotMaker PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
