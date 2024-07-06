@@ -27,6 +27,8 @@ set(PROJECT_SOURCES
         defines.h
         keyboardhook.h
         keyboardhook.cpp
+        showrect.h
+        showrect.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
