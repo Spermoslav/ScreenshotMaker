@@ -123,7 +123,9 @@ void MainWidget::keyChangePBClicked()
 
 void MainWidget::keyEvent(KeyStatus ks)
 {
-    if(ks.second) keys->keyPress(ks.first);
-    else          keys->keyRelease(ks.first);
+    if(SSMaker->isHidden()){
+        if(ks.second) keys->keyPress(ks.first);
+        else          keys->keyRelease(ks.first);
+    }
 }
 
