@@ -12,7 +12,6 @@ public:
     void update();              // обновляет текст согласно размерам виджета
     void updateWidth();         // обновляет свой размер под размеры текста
 private:
-    QWidget *parent;
     const QWidget *obj;         // объект, размеры которого отображает
 };
 

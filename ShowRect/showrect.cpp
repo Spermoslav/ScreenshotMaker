@@ -4,7 +4,6 @@ ShowRect::ShowRect(QWidget *parent, const QWidget *obj)
     : QLabel(parent)
 {
     this->obj = obj;
-    this->parent = parent;
     setText(QString::number(obj->width()) + "x" + QString::number(obj->height()));
     setAlignment(Qt::AlignCenter);
 }
