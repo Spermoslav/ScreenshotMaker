@@ -98,7 +98,7 @@ Screen::Screen(ScreenShotMaker *parent)
                            "border: 1px solid black;");
     toolBar->hide();
 
-    SSAreaRect = new ShowRect(this, SSArea);
+    SSAreaRect = new ShowRect(SSArea, this);
     SSAreaRect->setStyleSheet("border: 1px solid black;"
                               "border-radius: 7px;"
                               "background-color: rgb(200, 200, 200);");
