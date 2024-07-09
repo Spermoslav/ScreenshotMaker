@@ -323,24 +323,39 @@ void ScreenShotArea::resizeEvent(QResizeEvent *e)
 }
 
 ToolBar::ToolBar(Screen *parent, ScreenShotMaker *ssm)
-    : QGroupBox(parent)
+    : QGroupBox(parent), screen(parent), SSMaker(ssm),
+    fastSavePB     (new HintButton("fast", this, parent)),
+    savePB         (new HintButton("save", this, parent)),
+    saveClipboardPB(new HintButton("copy", this, parent)),
+    closePB        (new HintButton("close", this, parent))
 {
-    this->screen = parent;
-    SSMaker = ssm;
-
     setCursor(QCursor(Qt::PointingHandCursor));
     resize(30, 120);
 
-    fastSavePB = new QPushButton("fast", this);
+    fastSavePB->setHint("Быстрое сохранение в директорию\nпо умолчанию");
+    fastSavePB->setHintContentsMargins(5, 5, 5, 5);
+    fastSavePB->setHintStyleSheet("background-color: rgb(200, 200, 200);"
+                                  "border: 1px solid black;"
+                                  "border-radius: 5px;");
+    savePB->setHint("Сохранить в директорию");
+    savePB->setHintContentsMargins(5, 5, 5, 5);
+    savePB->setHintStyleSheet("background-color: rgb(200, 200, 200);"
+                              "border: 1px solid black;"
+                              "border-radius: 5px;");
+    saveClipboardPB->setHint("Копировать скриншот");
+    saveClipboardPB->setHintContentsMargins(5, 5, 5, 5);
+    saveClipboardPB->setHintStyleSheet("background-color: rgb(200, 200, 200);"
+                                       "border: 1px solid black;"
+                                       "border-radius: 5px;");
+    closePB->setHint("Закрыть");
+    closePB->setHintContentsMargins(5, 5, 5, 5);
+    closePB->setHintStyleSheet("background-color: rgb(200, 200, 200);"
+                               "border: 1px solid black;"
+                               "border-radius: 5px;");
+
     connect(fastSavePB, &QPushButton::clicked, this, &ToolBar::fastSavePBClicked);
-
-    savePB = new QPushButton("save", this);
     connect(savePB, &QPushButton::clicked, this, &ToolBar::savePBClicked);
-
-    closePB = new QPushButton("X", this);
     connect(closePB, &QPushButton::clicked, this, &ToolBar::closePBClicked);
-
-    saveClipboardPB = new QPushButton("copy", this);
     connect(saveClipboardPB, &QPushButton::clicked, this, &ToolBar::saveClipboardPBClicked);
 }
 

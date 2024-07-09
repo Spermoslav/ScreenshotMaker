@@ -12,6 +12,7 @@
 
 #include "pin.h"
 #include "showrect.h"
+#include "hintbutton.h"
 
 class MainWidget;
 class Screen;
@@ -127,10 +128,10 @@ private:
     Screen *screen;
     ScreenShotMaker *SSMaker;
 
-    QPushButton *fastSavePB;
-    QPushButton *savePB;
-    QPushButton *saveClipboardPB;
-    QPushButton *closePB;
+    HintButton *fastSavePB;
+    HintButton *savePB;
+    HintButton *saveClipboardPB;
+    HintButton *closePB;
 
     bool isVertical = true; // true - вертикально расположен, false - горизонтально
 };
