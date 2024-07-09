@@ -17,7 +17,8 @@ ScreenShotMaker::ScreenShotMaker()
 
 void ScreenShotMaker::activate()
 {
-    screen->setPixmap(QApplication::primaryScreen()->grabWindow());
+    QScreen* sc = qApp->screens().at(0);
+    screen->setPixmap(sc->grabWindow(0));
 #ifndef SSMAKER_NOTTOPHINT
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 #endif
