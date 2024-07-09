@@ -21,7 +21,9 @@ ScreenShotMaker::ScreenShotMaker(MainWidget *menu)
 void ScreenShotMaker::activate()
 {
     screen->setPixmap(QApplication::primaryScreen()->grabWindow());
+#ifndef SSMAKER_NOTTOPHINT
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+#endif
 #ifdef SSMAKER_WINDOW
     show();
 #else
