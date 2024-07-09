@@ -22,7 +22,7 @@ class ToolBar;          // инструменты для взаимодейст�
 class ScreenShotMaker : public QWidget
 {
 public:
-    ScreenShotMaker(MainWidget *menu);
+    ScreenShotMaker();
 
     void activate();
 
@@ -34,8 +34,6 @@ public:
 
 private:
     Screen *screen;
-
-    MainWidget *menu;
 };
 
 class Screen : public QLabel
