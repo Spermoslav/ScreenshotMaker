@@ -396,18 +396,21 @@ void ToolBar::resizeEvent(QResizeEvent *e)
 
 void ToolBar::fastSavePBClicked()
 {
+    fastSavePB->hideHint();
     SSMaker->makeScreenShot();
     SSMaker->close();
 }
 
 void ToolBar::savePBClicked()
 {
+    savePB->hideHint();
     SSMaker->makeScreenShot(QFileDialog::getSaveFileName(this, "Выберите директорию", FileConfig::dir(), FileConfig::EXT_LIST));
     SSMaker->close();
 }
 
 void ToolBar::saveClipboardPBClicked()
 {
+    saveClipboardPB->hideHint();
     QApplication::clipboard()->setPixmap(screen->grabScreenShotArea());
     SSMaker->close();
 }
