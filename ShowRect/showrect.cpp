@@ -22,3 +22,8 @@ void ShowRect::updateWidth()
         resize(font().pointSize() * text().size() * 0.8, height());
     }
 }
+
+void ShowRect::setObj(const QWidget *obj)
+{
+    this->obj = obj;
+}

@@ -11,6 +11,7 @@ public:
     explicit ShowRect(const QWidget *obj, QWidget *parent = nullptr);
     void update();              // обновляет текст согласно размерам виджета
     void updateWidth();         // обновляет свой размер под размеры текста
+    void setObj(const QWidget *obj);
 private:
     const QWidget *obj;         // объект, размеры которого отображает
 };
