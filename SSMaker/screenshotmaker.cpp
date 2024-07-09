@@ -10,11 +10,9 @@
 ScreenShotMaker::ScreenShotMaker()
     : QWidget()
 {
-    setWindowOpacity(1);
     setGeometry(QApplication::primaryScreen()->geometry());
 
     screen = new Screen(this);
-    screen->setGeometry(rect());
 }
 
 void ScreenShotMaker::activate()
