@@ -16,8 +16,8 @@ class KeyShortcut
 {
 public:
     KeyShortcut() = default;
-    KeyShortcut(Qt::Key key);
-    KeyShortcut(const std::initializer_list<Qt::Key> &key);
+    explicit KeyShortcut(Qt::Key key);
+    explicit KeyShortcut(const std::initializer_list<Qt::Key> &key);
 
     KeyShortcut &operator = (const KeyShortcut &ks);
     KeyShortcut &operator += (const KeyShortcut &ks);
