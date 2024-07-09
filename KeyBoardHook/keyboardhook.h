@@ -20,8 +20,8 @@ LRESULT CALLBACK HookCallBack(int nCode, WPARAM wParam, LPARAM lParam);
 class Call
 {
     friend LRESULT CALLBACK HookCallBack(int nCode, WPARAM wParam, LPARAM lParam);
-    friend MainWidget;
-    friend ChangeKeys;
+    friend class MainWidget;
+    friend class ChangeKeys;
 
     static void setMenu(MainWidget* obj, void (MainWidget::*func)(KeyStatus))
     {
