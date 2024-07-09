@@ -48,7 +48,7 @@ MainWidget::MainWidget(QWidget *parent)
     changeKeys = new ChangeKeys(this);
     changeKeys->setFixedSize(300, 100);
 
-    SSMaker = new ScreenShotMaker(this);
+    SSMaker = new ScreenShotMaker;
 #ifdef SSMAKER_START
     SSMaker->activate();
 #endif
