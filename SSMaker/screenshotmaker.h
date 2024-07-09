@@ -47,6 +47,8 @@ public:
     void updateToolsBarPos();
     void updateSSAreaRectPos();
 
+    inline void hideSSAreaRect() { SSAreaRect->hide(); }
+
     QPixmap grabScreenShotArea();
 
 private slots:
