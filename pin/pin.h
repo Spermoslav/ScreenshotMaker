@@ -26,7 +26,7 @@ public:
         : pinner(pinner), obj(obj), indent(indent), placement(place) {}
     Pin &operator = (const Pin &pin);
 
-    void setOut(bool out) { isOut = out; }
+    inline void setOut(bool out) { isOut = out; }
 
     void update();          // обновляет позицию pinner
 
@@ -48,9 +48,9 @@ public:
     QPoint checkDownLeft();
     QPoint checkDownRight();
 
-    uint getIndent() const { return indent; }
+    inline uint getIndent() const { return indent; }
 
-    Placement place() const { return placement; }
+    inline Placement place() const { return placement; }
 
 private:
     QWidget* pinner;        // объект, который прикрепляется
