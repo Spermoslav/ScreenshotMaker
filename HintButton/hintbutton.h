@@ -25,6 +25,7 @@ public:
     void setHintIndent(int ind);
     void setHintContentsMargins(int left, int top, int right, int down);
     void setHintStyleSheet(const QString& style);
+    inline void hideHint() { hintL->hide(); }
 
     inline QString hint() const { return hintL->text(); }
 
