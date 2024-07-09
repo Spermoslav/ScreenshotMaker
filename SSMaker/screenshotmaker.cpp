@@ -62,49 +62,43 @@ void ScreenShotMaker::reset()
 }
 
 Screen::Screen(ScreenShotMaker *parent)
-    : QLabel(parent)
+    : QLabel(parent),
+      SSMaker(parent),
+      gb_1(new QGroupBox(this)),
+      gb_2(new QGroupBox(this)),
+      gb_3(new QGroupBox(this)),
+      gb_4(new QGroupBox(this)),
+      SSArea(new ScreenShotArea(this)),
+      toolBar(new ToolBar(this, parent)),
+      SSAreaRect(new ShowRect(SSArea, this)),
+      toolBarPin(Pin(toolBar, SSArea)),
+      SSAreaRectPin(Pin(SSAreaRect, SSArea))
 {
-    SSMaker = parent;
-
-    gb_1 = new QGroupBox(this);
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);
     gb_1->setStyleSheet("background-color: rgba(0, 0, 0, " + QString::number(GB_OPACITY) + ");"
                         "border: 0px;");
-
-    gb_2 = new QGroupBox(this);
     gb_2->setGeometry(width() / 2, 0, width() / 2, height() / 2);
     gb_2->setStyleSheet("background-color: rgba(0, 0, 0, " + QString::number(GB_OPACITY) + ");"
                         "border: 0px;");
-
-    gb_3 = new QGroupBox(this);
     gb_3->setGeometry(0, height() / 2, width() / 2, height() / 2);
     gb_3->setStyleSheet("background-color: rgba(0, 0, 0, " + QString::number(GB_OPACITY) + ");"
                         "border: 0px;");
-
-    gb_4 = new QGroupBox(this);
     gb_4->setGeometry(width() / 2, height() / 2, width() / 2, height() / 2);
     gb_4->setStyleSheet("background-color: rgba(0, 0, 0, " + QString::number(GB_OPACITY) + ");"
                         "border: 0px;");
 
-    SSArea = new ScreenShotArea(this);
     SSArea->setStyleSheet(ScreenShotArea::borderStyles);
     SSArea->hide();
 
-    toolBar = new ToolBar(this, parent);
     toolBar->setStyleSheet("background-color: rgb(200, 200, 200);"
                            "border: 1px solid black;");
     toolBar->hide();
 
-    SSAreaRect = new ShowRect(SSArea, this);
     SSAreaRect->setStyleSheet("border: 1px solid black;"
                               "border-radius: 7px;"
                               "background-color: rgb(200, 200, 200);");
     SSAreaRect->setFont(QFont(SSAreaRect->font().family(), 20));
     SSAreaRect->hide();
-
-    toolBarPin = Pin(toolBar, SSArea);
-
-    SSAreaRectPin = Pin(SSAreaRect, SSArea);
 
     update();
 }

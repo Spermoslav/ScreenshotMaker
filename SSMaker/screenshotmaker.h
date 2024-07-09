@@ -40,7 +40,7 @@ class Screen : public QLabel
 {
     Q_OBJECT
 public:
-    Screen(ScreenShotMaker *parent);
+    explicit Screen(ScreenShotMaker *parent);
 
     void reset();
 
