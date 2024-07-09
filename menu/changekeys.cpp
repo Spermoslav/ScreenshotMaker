@@ -2,30 +2,28 @@
 #include "keyboardhook.h"
 
 ChangeKeys::ChangeKeys(MainWidget *mw)
-    : QWidget()
+    : QWidget(),
+      parent(mw),
+      keysLabel(new QLabel),
+      savePB(new QPushButton("save")),
+      cancelPB(new QPushButton("cancel")),
+      btns_lay(new QHBoxLayout),
+      main_lay(new QVBoxLayout(this))
 {
     setWindowTitle("Нажмите нужные клавиши");
 
     Call::setChangeKeys(this, keyEvent);
 
-    parent = mw;
-
-    keysLabel = new QLabel;
     keysLabel->setAlignment(Qt::AlignCenter);
 
-    savePB = new QPushButton;
     savePB->setText("save");
-    connect(savePB, &QPushButton::clicked, this, &ChangeKeys::savePBClicked);
-
-    cancelPB = new QPushButton;
     cancelPB->setText("cancel");
+
+    connect(savePB, &QPushButton::clicked, this, &ChangeKeys::savePBClicked);
     connect(cancelPB, &QPushButton::clicked, this, &ChangeKeys::cancelPBClicked);
 
-    btns_lay = new QHBoxLayout;
     btns_lay->addWidget(savePB);
     btns_lay->addWidget(cancelPB);
-
-    main_lay = new QVBoxLayout(this);
     main_lay->addWidget(keysLabel);
     main_lay->addLayout(btns_lay);
 }
