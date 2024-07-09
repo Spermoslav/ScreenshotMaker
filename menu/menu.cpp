@@ -24,7 +24,7 @@ MainWidget::MainWidget(QWidget *parent)
 
     keys->setFunc(this, &MainWidget::keyShortcutPress);
 
-    dirLabel->setText(dirLabelStr + "\n" + fileDir.DIR);
+    dirLabel->setText(dirLabelStr + "\n" + FileConfig::DIR);
     fileExtLabel->setText(fileExtStr);
     updateKeysLabel();
 
@@ -33,7 +33,7 @@ MainWidget::MainWidget(QWidget *parent)
     connect(dirPB, &QPushButton::clicked, this, &MainWidget::dirPBClicked);
     connect(keyChangePB, &QPushButton::clicked, this, &MainWidget::keyChangePBClicked);
 
-    fileExtCB->addItem(fileDir.EXT);
+    fileExtCB->addItem(FileConfig::EXT);
     fileExtCB->addItem(".jpeg");
     connect(fileExtCB, &QComboBox::activated, this, &MainWidget::fileExtActivated);
 
@@ -100,17 +100,17 @@ void MainWidget::keyShortcutPress()
 
 void MainWidget::fileExtActivated(int index)
 {
-    fileDir.EXT = fileExtCB->itemText(index);
+    FileConfig::EXT = fileExtCB->itemText(index);
     setFocus();
 }
 
 void MainWidget::dirPBClicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, "Выберите директорию", fileDir.DIR);
+    QString dir = QFileDialog::getExistingDirectory(this, "Выберите директорию", FileConfig::DIR);
     if(dir.isNull()) return;
-    fileDir.DIR = std::move(dir);
-    if(fileDir.DIR.at(fileDir.DIR.size() - 1) != '/') fileDir.DIR += "/";
-    dirLabel->setText(dirLabelStr + "\n" + fileDir.DIR);
+    FileConfig::DIR = std::move(dir);
+    if(FileConfig::DIR.at(FileConfig::DIR.size() - 1) != '/') FileConfig::DIR += "/";
+    dirLabel->setText(dirLabelStr + "\n" + FileConfig::DIR);
 }
 
 void MainWidget::keyChangePBClicked()
