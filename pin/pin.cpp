@@ -1,13 +1,5 @@
 #include "pin.h"
 
-Pin::Pin(QWidget* pinner, const  QWidget* obj, uint indent, Placement place)
-{
-    this->pinner = pinner;
-    this->obj = obj;
-    this->indent = indent;
-    placement = place;
-}
-
 Pin &Pin::operator =(const Pin &pin)
 {
     pinner = pin.pinner;

@@ -22,7 +22,8 @@ class Pin
 {
 public:
     Pin() = default;
-    Pin(QWidget* pinner, const QWidget* obj, uint indent = 10, Placement place = UpLeft);
+    inline Pin(QWidget* pinner, const QWidget* obj, uint indent = 10, Placement place = UpLeft)
+        : pinner(pinner), obj(obj), indent(indent), placement(place) {}
     Pin &operator = (const Pin &pin);
 
     void setOut(bool out) { isOut = out; }
