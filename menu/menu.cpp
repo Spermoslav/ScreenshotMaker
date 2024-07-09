@@ -8,36 +8,35 @@
 #include "keyboardhook.h"
 
 MainWidget::MainWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      keys(new KeyShortcut({Qt::Key_Control, Qt::Key_T})),
+      dirLabel(new QLabel),
+      fileExtLabel(new QLabel),
+      keyLabel(new QLabel),
+      dirPB(new QPushButton),
+      keyChangePB(new QPushButton),
+      fileExtCB(new QComboBox),
+      mainLay(new QGridLayout(this)),
+      changeKeys(new ChangeKeys(this)),
+      SSMaker(new ScreenShotMaker)
 {
     Call::setMenu(this, keyEvent);
 
-    keys = new KeyShortcut( {Qt::Key_Control, Qt::Key_T} );
     keys->setFunc(this, &MainWidget::keyShortcutPress);
 
-    dirLabel = new QLabel;
     dirLabel->setText(dirLabelStr + "\n" + fileDir.DIR);
-
-    fileExtLabel = new QLabel;
     fileExtLabel->setText(fileExtStr);
-
-    keyLabel = new QLabel;
     updateKeysLabel();
 
-    dirPB = new QPushButton;
     dirPB->setText("Изменить путь по умолчанию");
-    connect(dirPB, &QPushButton::clicked, this, &MainWidget::dirPBClicked);
-
-    keyChangePB = new QPushButton;
     keyChangePB->setText("Изменить сочетание клавиш");
+    connect(dirPB, &QPushButton::clicked, this, &MainWidget::dirPBClicked);
     connect(keyChangePB, &QPushButton::clicked, this, &MainWidget::keyChangePBClicked);
 
-    fileExtCB = new QComboBox;
     fileExtCB->addItem(fileDir.EXT);
     fileExtCB->addItem(".jpeg");
     connect(fileExtCB, &QComboBox::activated, this, &MainWidget::fileExtActivated);
 
-    mainLay = new QGridLayout(this);
     mainLay->addWidget(dirLabel, 0, 0);
     mainLay->addWidget(dirPB, 0, 1);
     mainLay->addWidget(fileExtLabel, 1, 0);
@@ -45,10 +44,8 @@ MainWidget::MainWidget(QWidget *parent)
     mainLay->addWidget(keyLabel, 2, 0);
     mainLay->addWidget(keyChangePB, 2, 1);
 
-    changeKeys = new ChangeKeys(this);
     changeKeys->setFixedSize(300, 100);
 
-    SSMaker = new ScreenShotMaker;
 #ifdef SSMAKER_START
     SSMaker->activate();
 #endif
