@@ -8,7 +8,7 @@
 class ShowRect : public QLabel
 {
 public:
-    ShowRect(QWidget *parent, const QWidget *obj);
+    explicit ShowRect(const QWidget *obj, QWidget *parent = nullptr);
     void update();              // обновляет текст согласно размерам виджета
     void updateWidth();         // обновляет свой размер под размеры текста
 private:

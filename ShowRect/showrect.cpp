@@ -1,6 +1,6 @@
 #include "showrect.h"
 
-ShowRect::ShowRect(QWidget *parent, const QWidget *obj)
+ShowRect::ShowRect(const QWidget *obj, QWidget *parent)
     : QLabel(parent), obj(obj)
 {
     setText(QString::number(obj->width()) + "x" + QString::number(obj->height()));
