@@ -25,17 +25,17 @@ public:
     void setFunc(MainWidget *obj, void (MainWidget::*foo) ()) { func = foo; funcObj = obj; }
 
     void addKey(Qt::Key key);                             // добавляет один key
-    void clear() { keys.clear(); }                        // удаляет все ключи
+    inline void clear() { keys.clear(); }                        // удаляет все ключи
 
     void keyPress(Qt::Key key);                           // должен срабатывать, когда нажимается какая-либо клавиша
     void keyRelease(Qt::Key key);                         // должен срабатывать, когда отжимается какая-либо клавиша
 
-    bool empty() const { return keys.empty(); }
-    int  size()  const { return keys.size(); }
+    inline bool empty() const { return keys.empty(); }
+    inline int  size()  const { return keys.size(); }
 
     std::list<Qt::Key> shortcut() const;                  // вернет список клавиш
 
-    const std::list<KeyStatus> getKeys() const { return keys; }
+    inline const std::list<KeyStatus> getKeys() const { return keys; }
 
 private:
     void releaseKeys();  // всем кнопкам присваивает false
