@@ -49,11 +49,6 @@ public:
 
     QPixmap grabScreenShotArea();
 
-    const QGroupBox *getGb_1() const { return gb_1; }
-    const QGroupBox *getGb_2() const { return gb_2; }
-    const QGroupBox *getGb_3() const { return gb_3; }
-    const QGroupBox *getGb_4() const { return gb_4; }
-
 private slots:
     void resizeEvent(QResizeEvent *e) override;
 
