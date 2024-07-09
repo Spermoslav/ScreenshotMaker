@@ -29,6 +29,8 @@ set(PROJECT_SOURCES
         menu/menu.cpp
         pin/pin.h
         pin/pin.cpp
+        HintButton/hintbutton.h
+        HintButton/hintbutton.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -65,6 +67,7 @@ include_directories(
     KeyBoardHook
     keys
     menu
+    HintButton
 )
 
 set_target_properties(ScreenshotMaker PROPERTIES
