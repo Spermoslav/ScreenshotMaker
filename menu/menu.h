@@ -11,6 +11,7 @@
 #include <QGroupBox>
 #include <list>
 #include "defines.h"
+#include <QStandardPaths>
 
 class KeyShortcut;
 class MainWidget;
@@ -29,9 +30,12 @@ public:
     const static inline QString &fileExt() { return EXT; }
 
     const static inline QString EXT_LIST = "PNG (*.png);; JPEG (*.jpeg);"; // список расширений скриншота для QFileDialog::getSaveFileName
+
 private:
-    static inline QString DIR = "C:/Users/Лёня/Рабочий стол/"; // директория для файла
-    static inline QString EXT = ".png";                        // расширение для файла
+    static inline QString DIR =             // директория для файла
+QStandardPaths::standardLocations(QStandardPaths::DesktopLocation).join("/") + "/";
+
+    static inline QString EXT = ".png";     // расширение для файла
 };
 
 class MainWidget : public QWidget
