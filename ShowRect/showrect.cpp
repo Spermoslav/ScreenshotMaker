@@ -1,9 +1,8 @@
 #include "showrect.h"
 
 ShowRect::ShowRect(QWidget *parent, const QWidget *obj)
-    : QLabel(parent)
+    : QLabel(parent), obj(obj)
 {
-    this->obj = obj;
     setText(QString::number(obj->width()) + "x" + QString::number(obj->height()));
     setAlignment(Qt::AlignCenter);
 }
