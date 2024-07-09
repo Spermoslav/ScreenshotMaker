@@ -23,11 +23,10 @@ using keyMap  = std::map<int, QString>;
 
 class FileConfig // хранит настройки файла
 {
-    friend MainWidget;
     friend class MainWidget;
 public:
-    const static QString &dir() { return DIR; }
-    const static QString &fileExt() { return EXT; }
+    const static inline QString &dir() { return DIR; }
+    const static inline QString &fileExt() { return EXT; }
 
     const static inline QString EXT_LIST = "PNG (*.png);; JPEG (*.jpeg);"; // список расширений скриншота для QFileDialog::getSaveFileName
 private:
