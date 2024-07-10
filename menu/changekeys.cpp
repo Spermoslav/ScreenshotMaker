@@ -62,16 +62,20 @@ void ChangeKeys::keyPress(Qt::Key ks)
     savePB->setDisabled(true);
     cancelPB->setDisabled(true);
 
+    KeyPair kp = keyToKeyPair(ks);
+
     if(keysChanged) {
         keysLabel->setText("");
         keys.clear();
-        keysLabel->setText(keysLabel->text() + keyToKeyPair(ks).second);
-        keys.push_back(keyToKeyPair(ks));
+        keysLabel->setText(keysLabel->text() + kp.second);
+        keys.push_back(kp);
         keysChanged = false;
     }
     else {
-        keysLabel->setText(keysLabel->text() + "+" + keyToKeyPair(ks).second);
-        keys.push_back(keyToKeyPair(ks));
+        if(std::find(keys.begin(), keys.end(), kp) == keys.end()) {
+            keysLabel->setText(keysLabel->text() + "+" + kp.second);
+            keys.push_back(kp);
+        }
     }
 }
 
