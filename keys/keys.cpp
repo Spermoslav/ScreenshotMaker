@@ -4,7 +4,8 @@
 KeyShortcut::KeyShortcut(const std::initializer_list<Qt::Key> &key)
 {
     for(Qt::Key k : key) {
-        keys.push_back(KeyStatus(k, false));
+        if(std::find(keys.begin(), keys.end(), KeyStatus(k, false)) == keys.end())
+            keys.push_back(KeyStatus(k, false));
     }
 }
 
@@ -32,7 +33,8 @@ KeyShortcut &KeyShortcut::operator +=(const KeyShortcut &ks)
 
 void KeyShortcut::addKey(Qt::Key key)
 {
-    keys.push_back(KeyStatus(key, false));
+    if(std::find(keys.begin(), keys.end(), KeyStatus(key, false)) == keys.end())
+        keys.push_back(KeyStatus(key, false));
 }
 
 void KeyShortcut::releaseKeys()
