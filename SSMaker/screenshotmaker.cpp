@@ -46,9 +46,6 @@ void ScreenShotMaker::makeScreenShot(const QString &dir)
             qDebug() << dir;
         }
     }
-    else {
-        qDebug() << "dir - empty";
-    }
 }
 
 void ScreenShotMaker::close()
@@ -101,6 +98,9 @@ Screen::Screen(ScreenShotMaker *parent)
     SSAreaRect->setFont(QFont(SSAreaRect->font().family(), 20));
     SSAreaRect->hide();
 
+    shortcut.setFunc(this, &Screen::copyToClipboard);
+
+    setFocus();
     update();
 }
 
@@ -248,6 +248,16 @@ void Screen::mouseMoveEvent(QMouseEvent *e)
         SSAreaRect->update();
         if(changeX || changeY ) updateSSAreaRectPos();
     }
+}
+
+void Screen::keyPressEvent(QKeyEvent *e)
+{
+    shortcut.keyPress((Qt::Key)e->key());
+}
+
+void Screen::keyReleaseEvent(QKeyEvent *e)
+{
+    shortcut.keyRelease((Qt::Key)e->key());
 }
 
 void Screen::expScreenArea(QMouseEvent *e)

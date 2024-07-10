@@ -13,6 +13,7 @@
 #include "pin.h"
 #include "showrect.h"
 #include "hintbutton.h"
+#include "keys.h"
 
 class MainWidget;
 class Screen;
@@ -57,6 +58,9 @@ private slots:
     void mouseReleaseEvent(QMouseEvent *e) override;
     void mouseMoveEvent(QMouseEvent *e) override;
 
+    void keyPressEvent(QKeyEvent *e)   override;
+    void keyReleaseEvent(QKeyEvent *e) override;
+
 private:
     void expScreenArea(QMouseEvent *e);
     void expScreenAreaLeft(QMouseEvent *e);              // изменяют размеры gb_ согласно позиции мыши
@@ -77,6 +81,8 @@ private:
 
     Pin toolBarPin;
     Pin SSAreaRectPin;
+
+    KeyShortcut<Screen> shortcut{ Qt::Key_Control, Qt::Key_C };
 
 // Отвечают, какой параметр будет изменяться у ScreenShotArea при перемещении мыши
     bool changeY; // true - менятся позиция по y, false - меняться height
