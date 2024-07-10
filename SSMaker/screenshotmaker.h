@@ -14,6 +14,7 @@
 #include "showrect.h"
 #include "hintbutton.h"
 #include "keys.h"
+#include "KeyShortcut.h"
 
 class MainWidget;
 class Screen;

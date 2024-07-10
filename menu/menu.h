@@ -13,6 +13,7 @@
 #include <QStandardPaths>
 #include "defines.h"
 #include "keys.h"
+#include "KeyShortcut.h"
 
 class MainWidget;
 class ChangeKeys;
