@@ -57,8 +57,6 @@ void ChangeKeys::keyEvent(KeyStatus ks)
 
 void ChangeKeys::keyPress(Qt::Key ks)
 {
-    cancelPB->setText("cancel");
-
     savePB->setDisabled(true);
     cancelPB->setDisabled(true);
 
