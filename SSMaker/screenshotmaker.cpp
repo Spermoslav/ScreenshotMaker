@@ -201,6 +201,15 @@ QPixmap Screen::grabScreenShotArea()
     return pm;
 }
 
+void Screen::copyToClipboard()
+{
+    if(!toolBar->isHidden()) {
+        toolBar->hide();
+        QApplication::clipboard()->setPixmap(grabScreenShotArea());
+        SSMaker->close();
+    }
+}
+
 void Screen::resizeEvent(QResizeEvent *e)
 {
     gb_1->setGeometry(0, 0, width() / 2, height() / 2);

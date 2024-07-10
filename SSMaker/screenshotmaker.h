@@ -25,11 +25,8 @@ public:
     ScreenShotMaker();
 
     void activate();
-
     void makeScreenShot(const QString &dir = "NULL");
-
     void close();
-
     void reset();
 
 private:
@@ -50,6 +47,8 @@ public:
     inline void hideSSAreaRect() { SSAreaRect->hide(); }
 
     QPixmap grabScreenShotArea();
+
+    void copyToClipboard();
 
 private slots:
     void resizeEvent(QResizeEvent *e) override;
