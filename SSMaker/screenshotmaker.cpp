@@ -426,10 +426,7 @@ void ToolBar::savePBClicked()
 
 void ToolBar::saveClipboardPBClicked()
 {
-    saveClipboardPB->hideHint();
-    screen->hideSSAreaRect();
-    QApplication::clipboard()->setPixmap(screen->grabScreenShotArea());
-    SSMaker->close();
+    screen->copyToClipboard();
 }
 
 void ToolBar::closePBClicked()
