@@ -9,7 +9,6 @@
 
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent),
-      keys(new KeyShortcut({Qt::Key_Control, Qt::Key_T})),
       dirLabel(new QLabel),
       fileExtLabel(new QLabel),
       keyLabel(new QLabel),
@@ -20,9 +19,10 @@ MainWidget::MainWidget(QWidget *parent)
       changeKeys(new ChangeKeys(this)),
       SSMaker(new ScreenShotMaker)
 {
+
     Call::setMenu(this, keyEvent);
 
-    keys->setFunc(this, &MainWidget::keyShortcutPress);
+    keys.setFunc(this, &MainWidget::keyShortcutPress);
 
     dirLabel->setText(dirLabelStr + "\n" + FileConfig::DIR);
     fileExtLabel->setText(fileExtStr);
@@ -58,9 +58,9 @@ MainWidget::~MainWidget()
 void MainWidget::setKey(const std::list<KeyPair> &key)
 {
     if(!key.empty()) {
-        keys->clear();
+        keys.clear();
         for(auto &k : key) {
-            keys->addKey((Qt::Key)k.first);
+            keys.addKey((Qt::Key)k.first);
         }
     }
     else  qDebug() << "setKey(keys) keys - empty";
@@ -69,10 +69,10 @@ void MainWidget::setKey(const std::list<KeyPair> &key)
 
 void MainWidget::updateKeysLabel()
 {
-    if(!keys->empty()) {
+    if(!keys.empty()) {
         QString labelText = "Сочетание клавиш для скриншота: \n";
 
-        for(auto &k : keys->shortcut()) {
+        for(auto &k : keys.shortcut()) {
             labelText += keyToString(k) + "+";
         }
         labelText.erase(labelText.end() - 1);
@@ -85,12 +85,12 @@ void MainWidget::updateKeysLabel()
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
-    keys->keyPress((Qt::Key)e->key());
+    keys.keyPress((Qt::Key)e->key());
 }
 
 void MainWidget::keyReleaseEvent(QKeyEvent *e)
 {
-    keys->keyRelease((Qt::Key)e->key());
+    keys.keyRelease((Qt::Key)e->key());
 }
 
 void MainWidget::keyShortcutPress()
@@ -121,8 +121,8 @@ void MainWidget::keyChangePBClicked()
 void MainWidget::keyEvent(KeyStatus ks)
 {
     if(SSMaker->isHidden()){
-        if(ks.second) keys->keyPress(ks.first);
-        else          keys->keyRelease(ks.first);
+        if(ks.second) keys.keyPress(ks.first);
+        else          keys.keyRelease(ks.first);
     }
 }
 

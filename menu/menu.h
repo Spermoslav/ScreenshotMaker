@@ -10,10 +10,10 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <list>
-#include "defines.h"
 #include <QStandardPaths>
+#include "defines.h"
+#include "keys.h"
 
-class KeyShortcut;
 class MainWidget;
 class ChangeKeys;
 class ScreenShotMaker;
@@ -59,7 +59,7 @@ private:
 
     ScreenShotMaker *SSMaker;
 
-    KeyShortcut* keys;
+    KeyShortcut<MainWidget> keys{ Qt::Key_Control, Qt::Key_T };
 
     QLabel *dirLabel;
     QLabel *fileExtLabel;
