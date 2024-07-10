@@ -25,6 +25,7 @@ set(PROJECT_SOURCES
         menu/changekeys.cpp
         keys/keys.h
         keys/keys.cpp
+        keys/KeyShortcut.h
         menu/menu.h
         menu/menu.cpp
         pin/pin.h
