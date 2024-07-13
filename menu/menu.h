@@ -11,6 +11,8 @@
 #include <QGroupBox>
 #include <list>
 #include <QStandardPaths>
+#include <QFile>
+
 #include "defines.h"
 #include "keys.h"
 #include "KeyShortcut.h"
@@ -27,6 +29,7 @@ public:
     const static inline QString &fileExt() { return EXT; }
 
     const static inline QString EXT_LIST = "PNG (*.png);; JPEG (*.jpeg);"; // список расширений скриншота для QFileDialog::getSaveFileName
+    const static inline QString CONFIG_NAME = "config.cfg";
 
 private:
     static inline QString DIR =             // директория для файла
@@ -58,9 +61,11 @@ private slots:
 private:
     void keyEvent(KeyStatus ks);
 
+    void updateConfig();
+
     ScreenShotMaker *SSMaker;
 
-    KeyShortcut<MainWidget> keys{ Qt::Key_Control, Qt::Key_T };
+    KeyShortcut<MainWidget> keys;
 
     QLabel *dirLabel;
     QLabel *fileExtLabel;
@@ -76,6 +81,7 @@ private:
     QGridLayout *mainLay;
 
     ChangeKeys *changeKeys;
+
     const static inline QString dirLabelStr = "Путь по умолчанию: ";
     const static inline QString fileExtStr  = "Расширение файла: ";
 };

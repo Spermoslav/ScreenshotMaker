@@ -19,6 +19,32 @@ MainWidget::MainWidget(QWidget *parent)
       changeKeys(new ChangeKeys(this)),
       SSMaker(new ScreenShotMaker)
 {
+    if(QFile::exists(FileConfig::CONFIG_NAME))
+    {
+        QFile config(FileConfig::CONFIG_NAME);  // чтение конфига
+        config.open(QIODevice::ReadOnly | QIODevice::Text);
+        QStringList x = QString::fromLocal8Bit(config.readAll()).split('\n');
+        FileConfig::DIR = x.at(0);
+        FileConfig::EXT = x.at(1);
+
+        QStringList t = x.at(2).split("+");
+        for(const auto& p : t) {
+            keys.addKey((Qt::Key)p.toInt());
+        }
+    }
+    else
+    {
+        QFile config(FileConfig::CONFIG_NAME);  // запись в конфиг настроек по умолчанию
+        config.open(QIODevice::WriteOnly | QIODevice::Text);
+        QString dir = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation).join("/") + "/";
+        QString ext = ".png";
+        config.write(dir.toLocal8Bit());
+        config.write("\n");
+        config.write(ext.toLocal8Bit());
+        config.write("\n");
+        config.write(QString::number(Qt::Key_PrintScreen).toLocal8Bit());
+        keys.addKey(Qt::Key_PrintScreen);
+    }
 
     Call::setMenu(this, keyEvent);
 
@@ -34,7 +60,8 @@ MainWidget::MainWidget(QWidget *parent)
     connect(keyChangePB, &QPushButton::clicked, this, &MainWidget::keyChangePBClicked);
 
     fileExtCB->addItem(FileConfig::EXT);
-    fileExtCB->addItem(".jpeg");
+    if(FileConfig::EXT == ".png") fileExtCB->addItem(".jpeg");
+    else fileExtCB->addItem(".png");
     connect(fileExtCB, &QComboBox::activated, this, &MainWidget::fileExtActivated);
 
     mainLay->addWidget(dirLabel, 0, 0);
@@ -62,6 +89,7 @@ void MainWidget::setKey(const std::list<KeyPair> &key)
         for(auto &k : key) {
             keys.addKey((Qt::Key)k.first);
         }
+        updateConfig();
     }
     else  qDebug() << "setKey(keys) keys - empty";
     updateKeysLabel();
@@ -101,6 +129,7 @@ void MainWidget::keyShortcutPress()
 void MainWidget::fileExtActivated(int index)
 {
     FileConfig::EXT = fileExtCB->itemText(index);
+    updateConfig();
     setFocus();
 }
 
@@ -111,6 +140,8 @@ void MainWidget::dirPBClicked()
     FileConfig::DIR = std::move(dir);
     if(FileConfig::DIR.at(FileConfig::DIR.size() - 1) != '/') FileConfig::DIR += "/";
     dirLabel->setText(dirLabelStr + "\n" + FileConfig::DIR);
+
+    updateConfig();
 }
 
 void MainWidget::keyChangePBClicked()
@@ -124,5 +155,23 @@ void MainWidget::keyEvent(KeyStatus ks)
         if(ks.second) keys.keyPress(ks.first);
         else          keys.keyRelease(ks.first);
     }
+}
+
+void MainWidget::updateConfig()
+{
+    QString shortcut = "";
+
+    for(int p : keys.shortcut()) {
+        shortcut += QString::number(p) + "+";
+    }
+    if(!keys.shortcut().empty()) shortcut.erase(shortcut.end() - 1);
+
+    QFile config(FileConfig::CONFIG_NAME);
+    config.open(QIODevice::WriteOnly | QIODevice::Text);
+    config.write(FileConfig::DIR.toLocal8Bit());
+    config.write("\n");
+    config.write(FileConfig::EXT.toLocal8Bit());
+    config.write("\n");
+    config.write(shortcut.toLocal8Bit());
 }
 
