@@ -9,6 +9,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+macro(copy_directory src dst)
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${src} ${dst}
+        RESULT_VARIABLE ret
+        OUTPUT_VARIABLE out
+        ERROR_VARIABLE  err
+    )
+    if(ret)
+        message(FATAL_ERROR "ERROR ---> could not be copied: ${err}")
+    endif()
+endmacro()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
