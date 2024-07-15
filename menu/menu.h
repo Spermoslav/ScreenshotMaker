@@ -48,6 +48,8 @@ public:
     void setKey(const std::list<KeyPair> &key);
     void updateKeysLabel();
 
+    void close();
+
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;

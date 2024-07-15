@@ -111,6 +111,11 @@ void MainWidget::updateKeysLabel()
     }
 }
 
+void MainWidget::close()
+{
+    QApplication::quit();
+}
+
 void MainWidget::keyPressEvent(QKeyEvent *e)
 {
     keys.keyPress((Qt::Key)e->key());
