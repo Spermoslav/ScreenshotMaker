@@ -20,9 +20,7 @@ macro(copy_directory src dst)
     endif()
 endmacro()
 
-copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/icon ${CMAKE_CURRENT_BINARY_DIR})
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icon/camera.png
-        ${CMAKE_CURRENT_BINARY_DIR}/icon COPYONLY)
+copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/icon ${CMAKE_CURRENT_BINARY_DIR}/icon)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
