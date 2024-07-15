@@ -19,6 +19,11 @@ macro(copy_directory src dst)
         message(FATAL_ERROR "ERROR ---> could not be copied: ${err}")
     endif()
 endmacro()
+
+copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/icon ${CMAKE_CURRENT_BINARY_DIR})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/icon/camera.png
+        ${CMAKE_CURRENT_BINARY_DIR}/icon COPYONLY)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
@@ -42,6 +47,7 @@ set(PROJECT_SOURCES
         pin/pin.cpp
         HintButton/hintbutton.h
         HintButton/hintbutton.cpp
+        icon/camera.png
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
