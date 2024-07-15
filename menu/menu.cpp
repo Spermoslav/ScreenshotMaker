@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QFileDialog>
 #include <QCursor>
+#include <QMenu>
 
 #include "menu.h"
 #include "changekeys.h"
@@ -17,7 +18,8 @@ MainWidget::MainWidget(QWidget *parent)
       fileExtCB(new QComboBox),
       mainLay(new QGridLayout(this)),
       changeKeys(new ChangeKeys(this)),
-      SSMaker(new ScreenShotMaker)
+      SSMaker(new ScreenShotMaker),
+      tray(new QSystemTrayIcon(this))
 {
     if(QFile::exists(FileConfig::CONFIG_NAME))
     {
@@ -73,6 +75,23 @@ MainWidget::MainWidget(QWidget *parent)
 
     changeKeys->setFixedSize(300, 100);
 
+    QMenu *menu = new QMenu(this);                                     // инициализация контекстного меню
+    QAction *viewWindow = new QAction("Открыть меню", this);
+    QAction *quitAction = new QAction("Закрыть", this);
+    connect(viewWindow, &QAction::triggered, this, &MainWidget::show);
+    connect(quitAction, &QAction::triggered, this, &QApplication::quit);
+    menu->addAction(viewWindow);
+    menu->addAction(quitAction);
+
+    QImage pix(QApplication::applicationDirPath() + "/icon/camera.png");  // инициализация картинки для трэя
+    pix = pix.scaled(QSize(32, 32), Qt::AspectRatioMode::KeepAspectRatio);
+    tray->setIcon(QIcon(QPixmap::fromImage(pix)));
+    connect(tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+    tray->setContextMenu(menu);
+    tray->show();
+    tray->setToolTip("ScreenshotMaker");
+
 #ifdef SSMAKER_START
     SSMaker->activate();
 #endif
@@ -113,7 +132,7 @@ void MainWidget::updateKeysLabel()
 
 void MainWidget::close()
 {
-    QApplication::quit();
+    hide();
 }
 
 void MainWidget::keyPressEvent(QKeyEvent *e)
@@ -124,6 +143,18 @@ void MainWidget::keyPressEvent(QKeyEvent *e)
 void MainWidget::keyReleaseEvent(QKeyEvent *e)
 {
     keys.keyRelease((Qt::Key)e->key());
+}
+
+void MainWidget::closeEvent(QCloseEvent *e)
+{
+    if(isVisible() && e->spontaneous()) {
+        hide();
+        tray->showMessage("ScreenshotMaker",
+                          "Меню свернуто в трей. Для того чтобы, "
+                          "развернуть меню приложения, щелкните по иконке приложения в трее",
+                          tray->icon(),
+                          1000);
+    }
 }
 
 void MainWidget::keyShortcutPress()
@@ -152,6 +183,18 @@ void MainWidget::dirPBClicked()
 void MainWidget::keyChangePBClicked()
 {
     changeKeys->show();
+}
+
+void MainWidget::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason == QSystemTrayIcon::Trigger) {
+        if(!isVisible()){
+            show();
+        }
+        else {
+            hide();
+        }
+    }
 }
 
 void MainWidget::keyEvent(KeyStatus ks)

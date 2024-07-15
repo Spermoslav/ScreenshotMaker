@@ -12,6 +12,7 @@
 #include <list>
 #include <QStandardPaths>
 #include <QFile>
+#include <QSystemTrayIcon>
 
 #include "defines.h"
 #include "keys.h"
@@ -53,12 +54,15 @@ public:
 private slots:
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
 
     void keyShortcutPress();
 
     void fileExtActivated(int index);
     void dirPBClicked();
     void keyChangePBClicked();
+
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
 private:
     void keyEvent(KeyStatus ks);
@@ -83,6 +87,8 @@ private:
     QGridLayout *mainLay;
 
     ChangeKeys *changeKeys;
+
+    QSystemTrayIcon *tray;
 
     const static inline QString dirLabelStr = "Путь по умолчанию: ";
     const static inline QString fileExtStr  = "Расширение файла: ";
