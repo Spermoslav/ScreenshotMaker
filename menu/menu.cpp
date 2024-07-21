@@ -187,7 +187,7 @@ void MainWidget::keyChangePBClicked()
 
 void MainWidget::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if(reason == QSystemTrayIcon::Trigger) {
+    if(reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick) {
         if(!isVisible()){
             show();
         }
