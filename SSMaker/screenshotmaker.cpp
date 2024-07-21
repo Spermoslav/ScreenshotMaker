@@ -426,10 +426,12 @@ void ToolBar::savePBClicked()
 
 void ToolBar::saveClipboardPBClicked()
 {
+    saveClipboardPB->hideHint();
     screen->copyToClipboard();
 }
 
 void ToolBar::closePBClicked()
 {
+    closePB->hideHint();
     SSMaker->close();
 }
